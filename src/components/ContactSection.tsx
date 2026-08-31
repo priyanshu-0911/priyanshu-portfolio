@@ -2,8 +2,7 @@
 
 import { motion } from "framer-motion";
 import { socials } from "@/data/socials";
-import { Mail, Github, Linkedin, MessageCircle } from "lucide-react";
-
+import { Mail, Code2, MessageCircle } from "lucide-react";
 const contactLinks = [
   {
     href: socials.email || "#",
@@ -14,14 +13,8 @@ const contactLinks = [
   {
     href: socials.github,
     label: "GitHub",
-    icon: Github,
+    icon: Code2,
     available: true,
-  },
-  {
-    href: socials.linkedin || "#",
-    label: "LinkedIn",
-    icon: Linkedin,
-    available: !!socials.linkedin,
   },
   {
     href: socials.whatsapp || "#",
