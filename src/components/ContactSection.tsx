@@ -55,7 +55,7 @@ export function ContactSection() {
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex h-12 items-center gap-3 rounded-full border border-border bg-surface px-6 text-sm text-text-secondary transition-colors hover:border-border-strong hover:text-text-primary"
+                  className="inline-flex h-12 items-center gap-3 rounded-full border border-border bg-surface px-6 text-sm text-text-secondary transition-all duration-300 hover:scale-105 hover:border-accent hover:shadow-[0_0_20px_rgba(45,212,191,0.15)] hover:text-text-primary"
                 >
                   <link.icon className="h-4 w-4" />
                   {link.label}
