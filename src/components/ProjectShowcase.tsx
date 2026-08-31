@@ -53,7 +53,7 @@ export function ProjectShowcase() {
                       {project.status}
                     </span>
                     <a
-                      href={project.demoUrl}
+                      href={project.liveUrl || "#"}
                       className="p-2 rounded-full border border-border hover:border-accent transition-colors group"
                     >
                       <ArrowUpRight className="w-5 h-5 text-text-secondary group-hover:text-accent transition-colors" />
