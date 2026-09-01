@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 46, "column": 0}, "map": {"version":3,"sources":["file:///C:/Portfolio%20Website/portfolio/src/components/SmoothScroll.tsx"],"sourcesContent":["\"use client\";\r\n\r\nimport { useEffect } from \"react\";\r\nimport Lenis from \"lenis\";\r\n\r\nexport function SmoothScroll() {\r\n  useEffect(() => {\r\n    const lenis = new Lenis({\r\n      duration: 1.2,          // smoothness\r\n      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),\r\n      orientation: \"vertical\",\r\n      smoothWheel: true,\r\n    });\r\n\r\n    function raf(time: number) {\r\n      lenis.raf(time);\r\n      requestAnimationFrame(raf);\r\n    }\r\n    requestAnimationFrame(raf);\r\n\r\n    return () => lenis.destroy();\r\n  }, []);\r\n\r\n  return null;\r\n}"],"names":["SmoothScroll","lenis","duration","easing","t","Math","min","pow","orientation","smoothWheel","raf","time","requestAnimationFrame","destroy"],"mappings":";;;;AAEA;AACA;AAHA;;;AAKO,SAASA;IACd,IAAA,kNAAS,EAAC;QACR,MAAMC,QAAQ,IAAI,kJAAK,CAAC;YACtBC,UAAU;YACVC,QAAQ,CAACC,IAAMC,KAAKC,GAAG,CAAC,GAAG,QAAQD,KAAKE,GAAG,CAAC,GAAG,CAAC,KAAKH;YACrDI,aAAa;YACbC,aAAa;QACf;QAEA,SAASC,IAAIC,IAAY;YACvBV,MAAMS,GAAG,CAACC;YACVC,sBAAsBF;QACxB;QACAE,sBAAsBF;QAEtB,OAAO,IAAMT,MAAMY,OAAO;IAC5B,GAAG,EAAE;IAEL,OAAO;AACT"}}]
-}
