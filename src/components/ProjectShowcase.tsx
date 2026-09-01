@@ -35,8 +35,6 @@ function ProjectVisual({
   project: (typeof projects)[number];
   index: number;
 }) {
-  const isClinic = project.id === "clinic-website";
-
   return (
     <motion.div
       className="group/visual relative aspect-[16/10] overflow-hidden rounded-2xl border border-border bg-surface"
@@ -63,55 +61,70 @@ function ProjectVisual({
         transition={{ duration: 0.7 }}
       />
 
-     {/* Project Preview */}
-<motion.div
-  className="absolute left-[6%] right-[6%] top-[8%] bottom-[8%] overflow-hidden rounded-xl border border-white/10 bg-background shadow-2xl"
-  whileHover={{
-    scale: 1.025,
-    y: -6,
-  }}
-  transition={{
-    duration: 0.6,
-    ease: [0.16, 1, 0.3, 1],
-  }}
->
-  {/* Browser chrome */}
-  <div className="relative z-10 flex h-9 items-center gap-1.5 border-b border-white/10 bg-background px-3">
-    <span className="h-2 w-2 rounded-full bg-white/20" />
-    <span className="h-2 w-2 rounded-full bg-white/20" />
-    <span className="h-2 w-2 rounded-full bg-white/20" />
+{/* Project Preview */}
+{project.liveUrl ? (
+  <a
+    href={project.liveUrl}
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label={`View ${project.title}`}
+    className="absolute bottom-[8%] left-[6%] right-[6%] top-[8%] block"
+  >
+    <motion.div
+      className="h-full w-full overflow-hidden rounded-xl border border-white/10 bg-background shadow-2xl"
+      whileHover={{
+        scale: 1.025,
+        y: -6,
+      }}
+      transition={{
+        duration: 0.6,
+        ease: [0.16, 1, 0.3, 1],
+      }}
+    >
+      
+      {/* Browser chrome */}
+      <div className="relative z-10 flex h-9 items-center gap-1.5 border-b border-white/10 bg-background px-3">
+        <span className="h-2 w-2 rounded-full bg-white/20" />
+        <span className="h-2 w-2 rounded-full bg-white/20" />
+        <span className="h-2 w-2 rounded-full bg-white/20" />
 
-    <div className="mx-auto h-4 w-40 rounded-md bg-white/[0.035]" />
-  </div>
-
-  {/* Actual project screenshot */}
-  <div className="relative h-[calc(100%-36px)] overflow-hidden">
-    {project.image ? (
-      <img
-        src={project.image}
-        alt={`${project.title} project preview`}
-        className="h-full w-full object-cover object-top transition-transform duration-700 group-hover/visual:scale-[1.03]"
-      />
-    ) : (
-      <div className="flex h-full items-center justify-center text-xs text-text-muted">
-        Preview coming soon
+        <div className="mx-auto h-4 w-40 rounded-md bg-white/[0.035]" />
       </div>
-    )}
 
-    {/* Subtle overlay */}
-    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
-  </div>
-</motion.div>
+      {/* Actual project screenshot */}
+      <div className="relative h-[calc(100%-36px)] overflow-hidden">
+        {project.image ? (
+          <img
+            src={project.image}
+            alt={`${project.title} project preview`}
+            className="h-full w-full object-cover object-top transition-transform duration-700 group-hover/visual:scale-[1.03]"
+          />
+        ) : (
+          <div className="flex h-full items-center justify-center text-xs text-text-muted">
+            Preview coming soon
+          </div>
+        )}
+
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+      </div>
+
+    </motion.div>
+  </a>
+) : null}
 
       {/* Project index */}
       <span className="absolute bottom-5 left-5 font-mono text-xs text-text-muted">
         0{index + 1}
       </span>
 
-      {/* Project category */}
-      <span className="absolute bottom-5 right-5 text-[10px] uppercase tracking-[0.2em] text-text-muted sm:text-xs">
-        {project.category}
-      </span>
+      {/* Project category badge */}
+      <div className="absolute left-5 top-5 flex items-center gap-2 rounded-full border border-white/10 bg-black/30 px-3 py-1.5 backdrop-blur-md">
+        <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+
+        <span className="text-[10px] uppercase tracking-[0.2em] text-white/70">
+          {project.category}
+        </span>
+      </div>
     </motion.div>
   );
 }
@@ -167,20 +180,27 @@ export function ProjectShowcase() {
 
                 {/* Content */}
                 <div className="lg:py-8">
-                  <div className="mb-5 flex items-center gap-3">
-                    <span className="font-mono text-xs text-text-muted">
-                      0{index + 1}
-                    </span>
+                <div className="mb-5 flex flex-wrap items-center gap-3">
+  <span className="font-mono text-xs text-text-muted">
+    0{index + 1}
+  </span>
 
-                    <span className="h-px w-8 bg-border" />
+  <span className="h-px w-8 bg-border" />
 
-                    <span className="text-xs uppercase tracking-[0.2em] text-text-muted">
-                      {project.status}
-                    </span>
-                  </div>
+  <span className="text-xs uppercase tracking-[0.2em] text-text-muted">
+    {project.category}
+  </span>
 
-                  <h3 className="mb-5 text-3xl font-semibold tracking-tight text-text-primary sm:text-4xl">
-                    {project.title}
+  <span className="h-1 w-1 rounded-full bg-border" />
+
+  <span className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-accent">
+    <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+    {project.status}
+  </span>
+</div>
+
+                  <h3 className="mb-5 text-3xl font-semibold tracking-[-0.03em] text-text-primary sm:text-4xl lg:text-5xl">
+                     {project.title}
                   </h3>
 
                   <p className="mb-7 max-w-xl text-base leading-8 text-text-secondary">
