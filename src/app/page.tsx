@@ -7,6 +7,7 @@ import { Footer } from "@/components/Footer";
 import { Preloader } from "@/components/Preloader";
 import { ScrollProgress } from "@/components/ScrollProgress";
 import { CursorGlow } from "@/components/CursorGlow";
+import { SkillTicker } from "@/components/SkillTicker";
 
 export default function Home() {
   return (
@@ -22,6 +23,7 @@ export default function Home() {
       <Preloader />
       <ScrollProgress />
       <CursorGlow />
+      <SkillTicker />
     </>
   );
 }
