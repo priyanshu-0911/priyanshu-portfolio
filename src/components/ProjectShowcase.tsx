@@ -63,94 +63,45 @@ function ProjectVisual({
         transition={{ duration: 0.7 }}
       />
 
-      {/* Browser */}
-      <motion.div
-        className="absolute left-[7%] right-[7%] top-[10%] overflow-hidden rounded-xl border border-white/10 bg-background shadow-2xl"
-        whileHover={{
-          scale: 1.025,
-          y: -6,
-        }}
-        transition={{
-          duration: 0.6,
-          ease: [0.16, 1, 0.3, 1],
-        }}
-      >
-        {/* Browser chrome */}
-        <div className="flex h-9 items-center gap-1.5 border-b border-white/5 px-3">
-          <span className="h-2 w-2 rounded-full bg-white/20" />
-          <span className="h-2 w-2 rounded-full bg-white/20" />
-          <span className="h-2 w-2 rounded-full bg-white/20" />
+     {/* Project Preview */}
+<motion.div
+  className="absolute left-[6%] right-[6%] top-[8%] bottom-[8%] overflow-hidden rounded-xl border border-white/10 bg-background shadow-2xl"
+  whileHover={{
+    scale: 1.025,
+    y: -6,
+  }}
+  transition={{
+    duration: 0.6,
+    ease: [0.16, 1, 0.3, 1],
+  }}
+>
+  {/* Browser chrome */}
+  <div className="relative z-10 flex h-9 items-center gap-1.5 border-b border-white/10 bg-background px-3">
+    <span className="h-2 w-2 rounded-full bg-white/20" />
+    <span className="h-2 w-2 rounded-full bg-white/20" />
+    <span className="h-2 w-2 rounded-full bg-white/20" />
 
-          <div className="mx-auto h-4 w-40 rounded-md bg-white/[0.035]" />
-        </div>
+    <div className="mx-auto h-4 w-40 rounded-md bg-white/[0.035]" />
+  </div>
 
-        {isClinic ? (
-          /* CLINIC */
-          <div className="p-5 sm:p-7">
-            <div className="mb-7 flex items-center justify-between">
-              <div className="h-4 w-24 rounded bg-white/10" />
+  {/* Actual project screenshot */}
+  <div className="relative h-[calc(100%-36px)] overflow-hidden">
+    {project.image ? (
+      <img
+        src={project.image}
+        alt={`${project.title} project preview`}
+        className="h-full w-full object-cover object-top transition-transform duration-700 group-hover/visual:scale-[1.03]"
+      />
+    ) : (
+      <div className="flex h-full items-center justify-center text-xs text-text-muted">
+        Preview coming soon
+      </div>
+    )}
 
-              <div className="flex gap-3">
-                <div className="h-2 w-10 rounded bg-white/5" />
-                <div className="h-2 w-10 rounded bg-white/5" />
-                <div className="h-2 w-10 rounded bg-white/5" />
-              </div>
-            </div>
-
-            <div className="max-w-md">
-              <div className="mb-3 h-7 w-[75%] rounded bg-white/10" />
-              <div className="mb-2 h-3 w-full rounded bg-white/5" />
-              <div className="mb-6 h-3 w-[80%] rounded bg-white/5" />
-
-              <div className="h-9 w-28 rounded-lg bg-accent/15" />
-            </div>
-
-            <div className="mt-8 grid grid-cols-3 gap-3">
-              <div className="h-16 rounded-lg bg-white/[0.035]" />
-              <div className="h-16 rounded-lg bg-white/[0.035]" />
-              <div className="h-16 rounded-lg bg-white/[0.035]" />
-            </div>
-          </div>
-        ) : (
-          /* CONNECTPRO */
-          <div className="p-5 sm:p-7">
-            <div className="mb-6 flex items-center justify-between">
-              <div>
-                <div className="mb-2 h-4 w-28 rounded bg-white/10" />
-                <div className="h-2 w-20 rounded bg-white/5" />
-              </div>
-
-              <div className="h-8 w-20 rounded-lg bg-accent/10" />
-            </div>
-
-            <div className="grid grid-cols-[1.5fr_1fr] gap-3">
-              <div className="h-28 rounded-lg bg-white/[0.035] p-4">
-                <div className="mb-4 h-2 w-20 rounded bg-white/10" />
-
-                <div className="flex items-end gap-2">
-                  <div className="h-10 w-3 rounded bg-white/10" />
-                  <div className="h-16 w-3 rounded bg-accent/20" />
-                  <div className="h-12 w-3 rounded bg-white/10" />
-                  <div className="h-20 w-3 rounded bg-accent/20" />
-                  <div className="h-14 w-3 rounded bg-white/10" />
-                </div>
-              </div>
-
-              <div className="h-28 rounded-lg bg-white/[0.035] p-4">
-                <div className="mb-4 h-2 w-16 rounded bg-white/10" />
-                <div className="mb-2 h-3 w-20 rounded bg-white/5" />
-                <div className="h-3 w-16 rounded bg-accent/15" />
-              </div>
-            </div>
-
-            <div className="mt-3 flex gap-3">
-              <div className="h-12 flex-1 rounded-lg bg-white/[0.035]" />
-              <div className="h-12 flex-1 rounded-lg bg-white/[0.035]" />
-              <div className="h-12 flex-1 rounded-lg bg-white/[0.035]" />
-            </div>
-          </div>
-        )}
-      </motion.div>
+    {/* Subtle overlay */}
+    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+  </div>
+</motion.div>
 
       {/* Project index */}
       <span className="absolute bottom-5 left-5 font-mono text-xs text-text-muted">
