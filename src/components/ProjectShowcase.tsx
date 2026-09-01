@@ -237,22 +237,24 @@ export function ProjectShowcase() {
                   </p>
 
                   {/* Technologies */}
-                  <div className="mb-8 flex flex-wrap gap-2">
-                    {project.id === "connect-pro" && (
-                     <div className="mb-8 flex items-center gap-3 text-xs text-text-muted">
-                     <span className="h-1.5 w-1.5 rounded-full bg-accent" />
-                         Razorpay payment integration
-                     </div>
+<div className="mb-6 flex flex-wrap gap-2">
+  {project.technologies.map((technology) => (
+    <span
+      key={technology}
+      className="rounded-full border border-border px-3 py-1.5 text-xs text-text-secondary transition-colors duration-300 group-hover:border-accent/30 group-hover:text-text-primary"
+    >
+      {technology}
+    </span>
+  ))}
+</div>
+
+{/* Integration highlight */}
+{project.id === "connect-pro" && (
+  <div className="mb-8 flex items-center gap-3 text-xs text-text-muted">
+    <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+    <span>Razorpay payment integration</span>
+  </div>
 )}
-                    {project.technologies.map((technology) => (
-                      <span
-                        key={technology}
-                        className="rounded-full border border-border px-3 py-1.5 text-xs text-text-secondary transition-colors duration-300 group-hover:border-accent/30 group-hover:text-text-primary"
-                      >
-                        {technology}
-                      </span>
-                    ))}
-                  </div>
 
                   {/* Links */}
                   <div className="flex flex-wrap gap-6">
