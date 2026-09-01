@@ -2,6 +2,7 @@ import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { ProjectShowcase } from "@/components/ProjectShowcase";
 import { AboutSection } from "@/components/AboutSection";
+import { InteractiveStack } from "@/components/InteractiveStack";
 import { ContactSection } from "@/components/ContactSection";
 import { Footer } from "@/components/Footer";
 import { Preloader } from "@/components/Preloader";
@@ -19,6 +20,7 @@ export default function Home() {
         <ProjectShowcase />
         <WhatIBuild />
         <AboutSection />
+        <InteractiveStack />
         <ContactSection />
       </main>
       <Footer />
