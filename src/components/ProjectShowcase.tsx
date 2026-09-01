@@ -62,55 +62,57 @@ function ProjectVisual({
       />
 
 {/* Project Preview */}
-{project.liveUrl ? (
-  <a
-    href={project.liveUrl}
-    target="_blank"
-    rel="noopener noreferrer"
-    aria-label={`View ${project.title}`}
-    className="absolute bottom-[8%] left-[6%] right-[6%] top-[8%] block"
+<a
+  href={project.liveUrl || "#"}
+  target={project.liveUrl ? "_blank" : undefined}
+  rel={project.liveUrl ? "noopener noreferrer" : undefined}
+  aria-label={`View ${project.title}`}
+  onClick={(event) => {
+    if (!project.liveUrl) {
+      event.preventDefault();
+    }
+  }}
+  className="absolute bottom-[8%] left-[6%] right-[6%] top-[8%] block"
+>
+  <motion.div
+    className="h-full w-full overflow-hidden rounded-xl border border-white/10 bg-background shadow-2xl"
+    whileHover={{
+      scale: 1.025,
+      y: -6,
+    }}
+    transition={{
+      duration: 0.6,
+      ease: [0.16, 1, 0.3, 1],
+    }}
   >
-    <motion.div
-      className="h-full w-full overflow-hidden rounded-xl border border-white/10 bg-background shadow-2xl"
-      whileHover={{
-        scale: 1.025,
-        y: -6,
-      }}
-      transition={{
-        duration: 0.6,
-        ease: [0.16, 1, 0.3, 1],
-      }}
-    >
-      
-      {/* Browser chrome */}
-      <div className="relative z-10 flex h-9 items-center gap-1.5 border-b border-white/10 bg-background px-3">
-        <span className="h-2 w-2 rounded-full bg-white/20" />
-        <span className="h-2 w-2 rounded-full bg-white/20" />
-        <span className="h-2 w-2 rounded-full bg-white/20" />
+    {/* Browser chrome */}
+    <div className="relative z-10 flex h-9 items-center gap-1.5 border-b border-white/10 bg-background px-3">
+      <span className="h-2 w-2 rounded-full bg-white/20" />
+      <span className="h-2 w-2 rounded-full bg-white/20" />
+      <span className="h-2 w-2 rounded-full bg-white/20" />
 
-        <div className="mx-auto h-4 w-40 rounded-md bg-white/[0.035]" />
-      </div>
+      <div className="mx-auto h-4 w-40 rounded-md bg-white/[0.035]" />
+    </div>
 
-      {/* Actual project screenshot */}
-      <div className="relative h-[calc(100%-36px)] overflow-hidden">
-        {project.image ? (
-          <img
-            src={project.image}
-            alt={`${project.title} project preview`}
-            className="h-full w-full object-cover object-top transition-transform duration-700 group-hover/visual:scale-[1.03]"
-          />
-        ) : (
-          <div className="flex h-full items-center justify-center text-xs text-text-muted">
-            Preview coming soon
-          </div>
-        )}
+    {/* Actual project screenshot */}
+    <div className="relative h-[calc(100%-36px)] overflow-hidden">
+      {project.image ? (
+        <img
+          src={project.image}
+          alt={`${project.title} project preview`}
+          className="h-full w-full object-cover object-top transition-transform duration-700 group-hover/visual:scale-[1.03]"
+        />
+      ) : (
+        <div className="flex h-full items-center justify-center text-xs text-text-muted">
+          Preview coming soon
+        </div>
+      )}
 
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
-      </div>
-
-    </motion.div>
-  </a>
-) : null}
+      {/* Subtle overlay */}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+    </div>
+  </motion.div>
+</a>
 
       {/* Project index */}
       <span className="absolute bottom-5 left-5 font-mono text-xs text-text-muted">
@@ -131,8 +133,10 @@ function ProjectVisual({
 
 export function ProjectShowcase() {
   return (
-    <section id="projects" className="px-6 py-32 sm:px-10 lg:px-16">
-      <div className="mx-auto max-w-7xl">
+<section
+  id="projects"
+  className="px-6 py-24 sm:px-10 lg:px-16 lg:py-28">
+        <div className="mx-auto max-w-7xl">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 25 }}

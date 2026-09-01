@@ -26,10 +26,11 @@ export const projects: Project[] = [
     ],
     featured: true,
     status: "completed",
+    liveUrl:
+      "https://clinic-website-sample.priyanshuramchandani41.workers.dev/",
     githubUrl:
       "https://github.com/priyanshu-0911/clinic-website-sample",
   },
-
   {
     id: "connect-pro",
     title: "ConnectPro",
@@ -45,6 +46,8 @@ export const projects: Project[] = [
     ],
     featured: true,
     status: "completed",
+    liveUrl:
+      "https://connectpro-plum.vercel.app/",
     githubUrl:
       "https://github.com/priyanshu-0911/connectpro",
   },

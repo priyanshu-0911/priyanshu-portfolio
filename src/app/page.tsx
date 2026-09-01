@@ -8,6 +8,7 @@ import { Preloader } from "@/components/Preloader";
 import { ScrollProgress } from "@/components/ScrollProgress";
 import { CursorGlow } from "@/components/CursorGlow";
 import { SkillTicker } from "@/components/SkillTicker";
+import { WhatIBuild } from "@/components/WhatIBuild";
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
       <main>
         <Hero />
         <ProjectShowcase />
+        <WhatIBuild />
         <AboutSection />
         <ContactSection />
       </main>
@@ -24,6 +26,7 @@ export default function Home() {
       <ScrollProgress />
       <CursorGlow />
       <SkillTicker />
+      
     </>
   );
 }
