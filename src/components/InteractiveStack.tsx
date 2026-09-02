@@ -43,13 +43,9 @@ type Technology = {
   description: string;
   category: Category;
   icon: {
-    title: string;
-    slug: string;
-    svg: string;
-    path: string;
-    source: string;
-    hex: string;
-  };
+  title: string;
+  path: string;
+};
   tags: string[];
 };
 
