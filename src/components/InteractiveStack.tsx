@@ -43,8 +43,12 @@ type Technology = {
   description: string;
   category: Category;
   icon: {
-    path: string;
     title: string;
+    slug: string;
+    svg: string;
+    path: string;
+    source: string;
+    hex: string;
   };
   tags: string[];
 };
@@ -53,11 +57,26 @@ const categories: {
   name: Category;
   icon: typeof Globe;
 }[] = [
-  { name: "Frontend", icon: Globe },
-  { name: "Backend", icon: Server },
-  { name: "Database", icon: Database },
-  { name: "Motion & 3D", icon: Layers3 },
-  { name: "Tools", icon: Wrench },
+  {
+    name: "Frontend",
+    icon: Globe,
+  },
+  {
+    name: "Backend",
+    icon: Server,
+  },
+  {
+    name: "Database",
+    icon: Database,
+  },
+  {
+    name: "Motion & 3D",
+    icon: Layers3,
+  },
+  {
+    name: "Tools",
+    icon: Wrench,
+  },
 ];
 
 const technologies: Technology[] = [
