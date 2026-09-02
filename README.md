@@ -1,36 +1,123 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Priyanshu Ramchandani
 
-## Getting Started
+### Full-Stack Developer · Builder · Constantly Learning
 
-First, run the development server:
+A personal portfolio showcasing my work across modern frontend development, full-stack applications, interactive experiences and real-world integrations.
+
+🌐 **Live Portfolio:**  
+https://portfolio.priyanshuramchandani41.workers.dev
+
+---
+
+## About
+
+I'm a Full-Stack Developer focused on building modern, practical and visually thoughtful digital experiences.
+
+I enjoy working across the stack, from polished interfaces and interactions to APIs, backend logic and databases.
+
+Currently exploring better ways to combine engineering, design and emerging technologies into useful products.
+
+---
+
+## Tech Stack
+
+### Frontend
+
+- React
+- Next.js
+- JavaScript
+- TypeScript
+- HTML
+- CSS
+- Tailwind CSS
+
+### Backend
+
+- Node.js
+- REST APIs
+- MySQL
+
+### Creative / Interactive
+
+- Framer Motion
+- GSAP
+- React Three Fiber
+- Three.js
+
+### Tools
+
+- Git
+- GitHub
+- Vercel
+- Cloudflare
+- Render
+- npm
+
+---
+
+## Featured Projects
+
+### ConnectPro
+
+A full-stack web application focused on connecting frontend interfaces with backend functionality and real-world integrations.
+
+**Highlights**
+
+- Responsive interface
+- Full-stack architecture
+- REST APIs
+- MySQL
+- Razorpay payment integration
+
+---
+
+### ReviseRush
+
+An application concept focused on turning uploaded study material into interactive, CBT-style practice questions.
+
+**Focus**
+
+- PDF processing
+- Question generation
+- Interactive learning
+- Exam preparation
+
+---
+
+## Portfolio
+
+The portfolio itself is built as a modern interactive web experience with an emphasis on:
+
+- Minimal dark UI
+- Responsive design
+- Micro-interactions
+- Motion design
+- Interactive technology showcase
+- Performance
+- Accessibility
+- SEO
+
+---
+
+## Built With
+
+This portfolio is built using:
+
+- Next.js
+- React
+- TypeScript
+- Tailwind CSS
+- Framer Motion
+- Lucide
+- Lenis
+- Cloudflare
+
+---
+
+## Development
+
+Clone the repository:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+git clone https://github.com/priyanshu-0911/priyanshu-portfolio.git
+cd priyanshu-portfolio

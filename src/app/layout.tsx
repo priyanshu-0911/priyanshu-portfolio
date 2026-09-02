@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { SmoothScroll } from "@/components/SmoothScroll";
@@ -76,6 +77,46 @@ export const metadata: Metadata = {
   },
 };
 
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": `${siteUrl}/#person`,
+      name: "Priyanshu Ramchandani",
+      url: siteUrl,
+      jobTitle: "Full-Stack Developer",
+      knowsAbout: [
+        "JavaScript",
+        "TypeScript",
+        "React",
+        "Next.js",
+        "Node.js",
+        "REST APIs",
+        "MySQL",
+        "Tailwind CSS",
+        "Framer Motion",
+        "GSAP",
+        "3D Web Development",
+      ],
+      sameAs: [
+        "https://github.com/priyanshu-0911",
+      ],
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${siteUrl}/#website`,
+      url: siteUrl,
+      name: "Priyanshu Ramchandani",
+      description:
+        "Portfolio of Priyanshu Ramchandani, a Full-Stack Developer.",
+      publisher: {
+        "@id": `${siteUrl}/#person`,
+      },
+    },
+  ],
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -87,7 +128,16 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} antialiased`}
     >
       <body className="min-h-screen bg-background text-foreground">
+        <Script
+          id="structured-data"
+          type="application/ld+json"
+          strategy="afterInteractive"
+        >
+          {JSON.stringify(structuredData)}
+        </Script>
+
         <SmoothScroll />
+
         {children}
       </body>
     </html>

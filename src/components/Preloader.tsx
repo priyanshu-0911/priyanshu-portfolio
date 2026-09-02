@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  motion,
-  AnimatePresence,
-  useReducedMotion,
-} from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
 
 export function Preloader() {
@@ -14,7 +10,7 @@ export function Preloader() {
   useEffect(() => {
     const timer = setTimeout(
       () => setIsLoading(false),
-      shouldReduceMotion ? 400 : 2000
+      shouldReduceMotion ? 300 : 900
     );
 
     return () => clearTimeout(timer);
@@ -26,20 +22,34 @@ export function Preloader() {
         <motion.div
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.6, ease: "easeInOut" }}
+          transition={{
+            duration: shouldReduceMotion ? 0.15 : 0.4,
+            ease: "easeInOut",
+          }}
           className="fixed inset-0 z-[999] flex items-center justify-center bg-background"
         >
           <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
+            initial={
+              shouldReduceMotion
+                ? undefined
+                : { scale: 0.92, opacity: 0 }
+            }
+            animate={
+              shouldReduceMotion
+                ? undefined
+                : { scale: 1, opacity: 1 }
+            }
+            transition={{
+              duration: 0.5,
+              ease: "easeOut",
+            }}
             className="text-center"
           >
             <motion.div
               animate={
                 shouldReduceMotion
                   ? undefined
-                  : { scale: [1, 1.1, 1] }
+                  : { scale: [1, 1.06, 1] }
               }
               transition={{
                 duration: 1.5,
@@ -55,7 +65,7 @@ export function Preloader() {
               initial={{ width: 0 }}
               animate={{ width: "100%" }}
               transition={{
-                duration: shouldReduceMotion ? 0.4 : 1.8,
+                duration: shouldReduceMotion ? 0.3 : 0.8,
                 ease: "easeInOut",
               }}
               className="mx-auto mt-4 h-[2px] max-w-[200px] rounded-full bg-accent/50"

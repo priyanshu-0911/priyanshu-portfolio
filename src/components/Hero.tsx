@@ -11,6 +11,15 @@ const words = [
   "things that matter",
 ];
 
+const floatingPoints = [
+  { top: "12%", left: "52%", delay: 0 },
+  { top: "72%", left: "17%", delay: 1 },
+  { top: "27%", left: "82%", delay: 2 },
+  { top: "84%", left: "68%", delay: 3 },
+];
+
+const ease = [0.16, 1, 0.3, 1] as const;
+
 export function Hero() {
   const shouldReduceMotion = useReducedMotion();
 
@@ -27,12 +36,14 @@ export function Hero() {
 
     if (subIndex === currentWord.length && !reverse) {
       const pause = setTimeout(() => setReverse(true), 1400);
+
       return () => clearTimeout(pause);
     }
 
     if (subIndex === 0 && reverse) {
       setReverse(false);
       setIndex((prev) => (prev + 1) % words.length);
+
       return;
     }
 
@@ -52,7 +63,10 @@ export function Hero() {
       className="relative min-h-[100svh] overflow-hidden border-b border-border"
     >
       {/* Ambient background */}
-      <div className="pointer-events-none absolute inset-0">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0"
+      >
         <div className="absolute inset-0 opacity-[0.035] [background-image:linear-gradient(rgba(255,255,255,1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,1)_1px,transparent_1px)] [background-size:80px_80px]" />
 
         <motion.div
@@ -64,11 +78,15 @@ export function Hero() {
                   opacity: [0.08, 0.16, 0.08],
                 }
           }
-          transition={{
-            duration: 9,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
+          transition={
+            shouldReduceMotion
+              ? undefined
+              : {
+                  duration: 9,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }
+          }
           className="absolute left-[15%] top-[15%] h-[32rem] w-[32rem] rounded-full bg-accent/10 blur-[120px]"
         />
 
@@ -81,11 +99,15 @@ export function Hero() {
                   y: [0, 50, 0],
                 }
           }
-          transition={{
-            duration: 12,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
+          transition={
+            shouldReduceMotion
+              ? undefined
+              : {
+                  duration: 12,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }
+          }
           className="absolute bottom-[-10rem] right-[-5rem] h-[30rem] w-[30rem] rounded-full bg-accent/5 blur-[120px]"
         />
 
@@ -96,9 +118,25 @@ export function Hero() {
       <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-[1500px] flex-col justify-between px-5 pb-6 pt-28 sm:px-10 sm:pt-32 lg:px-16">
         {/* Top metadata */}
         <motion.div
-          initial={shouldReduceMotion ? undefined : { opacity: 0, y: -15 }}
-          animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.15 }}
+          initial={
+            shouldReduceMotion
+              ? undefined
+              : { opacity: 0, y: -15 }
+          }
+          animate={
+            shouldReduceMotion
+              ? undefined
+              : { opacity: 1, y: 0 }
+          }
+          transition={
+            shouldReduceMotion
+              ? undefined
+              : {
+                  duration: 0.7,
+                  delay: 0.15,
+                  ease,
+                }
+          }
           className="flex items-center justify-between"
         >
           <div className="flex items-center gap-3 text-[11px] uppercase tracking-[0.25em] text-text-muted">
@@ -108,6 +146,7 @@ export function Hero() {
                   shouldReduceMotion ? "" : "animate-ping"
                 }`}
               />
+
               <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
             </span>
 
@@ -124,29 +163,79 @@ export function Hero() {
           {/* Typography */}
           <div>
             <motion.p
-              initial={shouldReduceMotion ? undefined : { opacity: 0, y: 20 }}
-              animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.3 }}
+              initial={
+                shouldReduceMotion
+                  ? undefined
+                  : { opacity: 0, y: 20 }
+              }
+              animate={
+                shouldReduceMotion
+                  ? undefined
+                  : { opacity: 1, y: 0 }
+              }
+              transition={
+                shouldReduceMotion
+                  ? undefined
+                  : {
+                      duration: 0.7,
+                      delay: 0.3,
+                      ease,
+                    }
+              }
               className="mb-6 text-xs font-medium uppercase tracking-[0.3em] text-text-muted"
             >
               Full-Stack Developer / Builder
             </motion.p>
 
             <motion.h1
-              initial={shouldReduceMotion ? undefined : { opacity: 0, y: 35 }}
-              animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, delay: 0.4 }}
+              initial={
+                shouldReduceMotion
+                  ? undefined
+                  : { opacity: 0, y: 35 }
+              }
+              animate={
+                shouldReduceMotion
+                  ? undefined
+                  : { opacity: 1, y: 0 }
+              }
+              transition={
+                shouldReduceMotion
+                  ? undefined
+                  : {
+                      duration: 0.9,
+                      delay: 0.4,
+                      ease,
+                    }
+              }
               className="max-w-5xl text-[clamp(3rem,14vw,9rem)] font-semibold leading-[0.88] tracking-[-0.065em] text-text-primary"
             >
               Priyanshu
               <br />
-              <span className="text-text-secondary">Ramchandani</span>
+              <span className="text-text-secondary">
+                Ramchandani
+              </span>
             </motion.h1>
 
             <motion.div
-              initial={shouldReduceMotion ? undefined : { opacity: 0, y: 25 }}
-              animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.65 }}
+              initial={
+                shouldReduceMotion
+                  ? undefined
+                  : { opacity: 0, y: 25 }
+              }
+              animate={
+                shouldReduceMotion
+                  ? undefined
+                  : { opacity: 1, y: 0 }
+              }
+              transition={
+                shouldReduceMotion
+                  ? undefined
+                  : {
+                      duration: 0.8,
+                      delay: 0.65,
+                      ease,
+                    }
+              }
               className="mt-10 flex max-w-2xl flex-col gap-7"
             >
               <p className="text-xl leading-relaxed text-text-secondary sm:text-2xl">
@@ -180,6 +269,7 @@ export function Hero() {
 
                     <ArrowUpRight
                       size={17}
+                      aria-hidden="true"
                       className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                     />
                   </a>
@@ -193,6 +283,7 @@ export function Hero() {
 
                   <ArrowUpRight
                     size={17}
+                    aria-hidden="true"
                     className="text-text-muted transition-colors group-hover:text-accent"
                   />
                 </a>
@@ -212,31 +303,51 @@ export function Hero() {
                 ? undefined
                 : { opacity: 1, scale: 1 }
             }
-            transition={{ duration: 1.2, delay: 0.5 }}
+            transition={
+              shouldReduceMotion
+                ? undefined
+                : {
+                    duration: 1.2,
+                    delay: 0.5,
+                    ease,
+                  }
+            }
             className="relative mx-auto aspect-square w-full max-w-[300px] sm:max-w-[360px] lg:max-w-[440px]"
           >
             {/* Outer rings */}
             <motion.div
               animate={
-                shouldReduceMotion ? undefined : { rotate: 360 }
+                shouldReduceMotion
+                  ? undefined
+                  : { rotate: 360 }
               }
-              transition={{
-                duration: 35,
-                repeat: Infinity,
-                ease: "linear",
-              }}
+              transition={
+                shouldReduceMotion
+                  ? undefined
+                  : {
+                      duration: 35,
+                      repeat: Infinity,
+                      ease: "linear",
+                    }
+              }
               className="absolute inset-[8%] rounded-full border border-white/[0.08]"
             />
 
             <motion.div
               animate={
-                shouldReduceMotion ? undefined : { rotate: -360 }
+                shouldReduceMotion
+                  ? undefined
+                  : { rotate: -360 }
               }
-              transition={{
-                duration: 24,
-                repeat: Infinity,
-                ease: "linear",
-              }}
+              transition={
+                shouldReduceMotion
+                  ? undefined
+                  : {
+                      duration: 24,
+                      repeat: Infinity,
+                      ease: "linear",
+                    }
+              }
               className="absolute inset-[20%] rounded-full border border-accent/[0.15]"
             />
 
@@ -250,16 +361,24 @@ export function Hero() {
                       scale: [1, 1.04, 1],
                     }
               }
-              transition={{
-                duration: 7,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-              className="absolute left-1/2 top-1/2 h-[46%] w-[46%] -translate-x-1/2 -translate-y-1/2 rounded-[30%] border border-accent/20 bg-accent/[0.035] shadow-[0_0_100px_rgba(45,212,191,0.08)] backdrop-blur-sm"
+              transition={
+                shouldReduceMotion
+                  ? undefined
+                  : {
+                      duration: 7,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }
+              }
+              className="absolute left-1/2 top-1/2 h-[46%] w-[46%] -translate-x-1/2 -translate-y-1/2 rounded-[30%] border border-accent/20 bg-accent/[0.035] shadow-[0_0_100px_rgba(45,212,190,0.08)] backdrop-blur-sm"
             >
-              <div className="absolute inset-[12%] rounded-[25%] border border-white/[0.08]" />
+              <div
+                aria-hidden="true"
+                className="absolute inset-[12%] rounded-[25%] border border-white/[0.08]"
+              />
 
               <motion.div
+                aria-hidden="true"
                 animate={
                   shouldReduceMotion
                     ? undefined
@@ -268,24 +387,23 @@ export function Hero() {
                         opacity: [0.25, 0.5, 0.25],
                       }
                 }
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
+                transition={
+                  shouldReduceMotion
+                    ? undefined
+                    : {
+                        duration: 4,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }
+                }
                 className="absolute inset-[28%] rounded-full bg-accent/20 blur-2xl"
               />
             </motion.div>
 
             {/* Floating points */}
-            {[
-              { top: "12%", left: "52%", delay: 0 },
-              { top: "72%", left: "17%", delay: 1 },
-              { top: "27%", left: "82%", delay: 2 },
-              { top: "84%", left: "68%", delay: 3 },
-            ].map((point, i) => (
+            {floatingPoints.map((point, index) => (
               <motion.div
-                key={i}
+                key={`${point.top}-${point.left}`}
                 animate={
                   shouldReduceMotion
                     ? undefined
@@ -294,23 +412,32 @@ export function Hero() {
                         opacity: [0.4, 1, 0.4],
                       }
                 }
-                transition={{
-                  duration: 3 + i,
-                  delay: point.delay,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
+                transition={
+                  shouldReduceMotion
+                    ? undefined
+                    : {
+                        duration: 3 + index,
+                        delay: point.delay,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }
+                }
                 style={{
                   top: point.top,
                   left: point.left,
                 }}
-                className="absolute h-1.5 w-1.5 rounded-full bg-accent shadow-[0_0_15px_rgba(45,212,191,0.6)]"
+                className="absolute h-1.5 w-1.5 rounded-full bg-accent shadow-[0_0_15px_rgba(45,212,190,0.6)]"
               />
             ))}
 
             {/* Label */}
             <div className="absolute bottom-[7%] left-1/2 flex -translate-x-1/2 items-center gap-2 whitespace-nowrap text-[10px] uppercase tracking-[0.25em] text-text-muted">
-              <Sparkles size={12} className="text-accent" />
+              <Sparkles
+                size={12}
+                aria-hidden="true"
+                className="text-accent"
+              />
+
               Always exploring
             </div>
           </motion.div>
@@ -318,9 +445,25 @@ export function Hero() {
 
         {/* Bottom */}
         <motion.div
-          initial={shouldReduceMotion ? undefined : { opacity: 0 }}
-          animate={shouldReduceMotion ? undefined : { opacity: 1 }}
-          transition={{ duration: 1, delay: 1.1 }}
+          initial={
+            shouldReduceMotion
+              ? undefined
+              : { opacity: 0 }
+          }
+          animate={
+            shouldReduceMotion
+              ? undefined
+              : { opacity: 1 }
+          }
+          transition={
+            shouldReduceMotion
+              ? undefined
+              : {
+                  duration: 1,
+                  delay: 1.1,
+                  ease,
+                }
+          }
           className="flex items-end justify-between"
         >
           <div className="hidden max-w-xs text-[10px] uppercase leading-5 tracking-[0.2em] text-text-muted sm:block">
@@ -340,7 +483,12 @@ export function Hero() {
             <span className="flex h-9 w-9 items-center justify-center rounded-full border border-border-strong transition-all duration-300 group-hover:border-accent group-hover:text-accent">
               <ArrowDown
                 size={14}
-                className={shouldReduceMotion ? "" : "animate-bounce"}
+                aria-hidden="true"
+                className={
+                  shouldReduceMotion
+                    ? ""
+                    : "animate-bounce"
+                }
               />
             </span>
           </a>
