@@ -1,7 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import {
+  AnimatePresence,
+  motion,
+  useReducedMotion,
+} from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { profile } from "@/data/profile";
 
@@ -14,9 +18,10 @@ const navLinks = [
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50">
+    <header className="fixed top-0 right-0 left-0 z-50">
       <nav className="mx-auto max-w-7xl px-6 py-5">
         <div className="flex items-center justify-between rounded-2xl border border-border bg-surface/80 px-6 py-3 backdrop-blur-xl">
           <a
@@ -40,21 +45,43 @@ export function Navbar() {
           </ul>
 
           <button
-            onClick={() => setIsOpen(!isOpen)}
+            type="button"
+            onClick={() => setIsOpen((open) => !open)}
             className="flex min-h-11 min-w-11 items-center justify-center rounded-lg text-text-secondary transition-colors hover:text-text-primary md:hidden"
-            aria-label="Toggle menu"
+            aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
+            aria-expanded={isOpen}
+            aria-controls="mobile-navigation"
           >
-            {isOpen ? <X size={20} /> : <Menu size={20} />}
+            {isOpen ? (
+              <X size={20} aria-hidden="true" />
+            ) : (
+              <Menu size={20} aria-hidden="true" />
+            )}
           </button>
         </div>
 
-        <AnimatePresence>
+        <AnimatePresence initial={false}>
           {isOpen && (
             <motion.div
-              initial={{ opacity: 0, y: -10, scale: 0.98 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -10, scale: 0.98 }}
-              transition={{ duration: 0.2 }}
+              id="mobile-navigation"
+              initial={
+                shouldReduceMotion
+                  ? undefined
+                  : { opacity: 0, y: -10, scale: 0.98 }
+              }
+              animate={
+                shouldReduceMotion
+                  ? undefined
+                  : { opacity: 1, y: 0, scale: 1 }
+              }
+              exit={
+                shouldReduceMotion
+                  ? undefined
+                  : { opacity: 0, y: -10, scale: 0.98 }
+              }
+              transition={{
+                duration: shouldReduceMotion ? 0 : 0.2,
+              }}
               className="mt-2 overflow-hidden rounded-2xl border border-border bg-surface/95 backdrop-blur-xl md:hidden"
             >
               <ul className="flex flex-col p-4">

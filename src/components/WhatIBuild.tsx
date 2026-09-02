@@ -1,6 +1,3 @@
-"use client";
-
-import { motion } from "framer-motion";
 import {
   Globe2,
   Layers3,
@@ -47,17 +44,11 @@ export function WhatIBuild() {
   return (
     <section
       id="services"
-        className="px-5 py-20 sm:px-10 sm:py-24 lg:px-16 lg:py-28">
+      className="px-5 py-20 sm:px-10 sm:py-24 lg:px-16 lg:py-28"
+    >
       <div className="mx-auto max-w-7xl">
-
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.7 }}
-          className="mb-20"
-        >
+        <div className="mb-20">
           <p className="mb-4 font-mono text-xs uppercase tracking-[0.3em] text-accent">
             What I Build
           </p>
@@ -74,23 +65,16 @@ export function WhatIBuild() {
             I enjoy turning ideas into practical digital experiences,
             combining thoughtful interfaces with the engineering behind them.
           </p>
-        </motion.div>
+        </div>
 
         {/* Services */}
         <div className="grid border-l border-t border-border md:grid-cols-2">
-          {services.map((service, index) => {
+          {services.map((service) => {
             const Icon = service.icon;
 
             return (
-              <motion.div
+              <article
                 key={service.number}
-                initial={{ opacity: 0, y: 25 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{
-                  duration: 0.6,
-                  delay: index * 0.08,
-                }}
                 className="group relative min-h-[320px] border-b border-r border-border p-8 transition-colors duration-500 hover:bg-white/[0.02] sm:p-10 lg:p-12"
               >
                 {/* Number */}
@@ -102,6 +86,7 @@ export function WhatIBuild() {
                   <Icon
                     size={20}
                     strokeWidth={1.5}
+                    aria-hidden="true"
                     className="text-text-muted transition-all duration-500 group-hover:scale-110 group-hover:text-accent"
                   />
                 </div>
@@ -129,12 +114,14 @@ export function WhatIBuild() {
                 </div>
 
                 {/* Hover line */}
-                <div className="absolute bottom-0 left-0 h-px w-0 bg-accent transition-all duration-500 group-hover:w-full" />
-              </motion.div>
+                <div
+                  aria-hidden="true"
+                  className="absolute bottom-0 left-0 h-px w-0 bg-accent transition-all duration-500 group-hover:w-full"
+                />
+              </article>
             );
           })}
         </div>
-
       </div>
     </section>
   );
