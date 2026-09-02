@@ -10,6 +10,7 @@ import { ScrollProgress } from "@/components/ScrollProgress";
 import { CursorGlow } from "@/components/CursorGlow";
 import { SkillTicker } from "@/components/SkillTicker";
 import { WhatIBuild } from "@/components/WhatIBuild";
+import { ExperimentsSection } from "@/components/ExperimentsSection";
 
 export default function Home() {
   return (
@@ -21,6 +22,7 @@ export default function Home() {
         <WhatIBuild />
         <AboutSection />
         <InteractiveStack />
+        <ExperimentsSection />
         <ContactSection />
       </main>
       <Footer />
