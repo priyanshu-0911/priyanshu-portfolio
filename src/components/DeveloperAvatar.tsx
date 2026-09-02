@@ -3,6 +3,7 @@
 import {
   motion,
   useMotionValue,
+  useReducedMotion,
   useSpring,
   useTransform,
 } from "framer-motion";
@@ -22,6 +23,7 @@ const orbitItems = [
 ];
 
 export function DeveloperAvatar() {
+  const shouldReduceMotion = useReducedMotion();
   const containerRef = useRef<HTMLDivElement>(null);
 
   const mouseX = useMotionValue(0);
@@ -83,7 +85,10 @@ export function DeveloperAvatar() {
       >
         {/* Ambient glow */}
         <motion.div
-          animate={{
+          animate={
+            shouldReduceMotion
+            ? undefined
+            :{ 
             scale: [1, 1.12, 1],
             opacity: [0.2, 0.35, 0.2],
           }}
@@ -97,7 +102,7 @@ export function DeveloperAvatar() {
 
         {/* Outer orbit */}
         <motion.div
-          animate={{ rotate: 360 }}
+          animate={shouldReduceMotion ? undefined : { rotate: 360 }}
           transition={{
             duration: 24,
             repeat: Infinity,
@@ -110,7 +115,7 @@ export function DeveloperAvatar() {
 
         {/* Second orbit */}
         <motion.div
-          animate={{ rotate: -360 }}
+          animate={shouldReduceMotion ? undefined : { rotate: -360 }}
           transition={{
             duration: 18,
             repeat: Infinity,
@@ -123,7 +128,7 @@ export function DeveloperAvatar() {
 
         {/* Inner dashed orbit */}
         <motion.div
-          animate={{ rotate: 360 }}
+          animate={shouldReduceMotion ? undefined : { rotate: 360 }}
           transition={{
             duration: 12,
             repeat: Infinity,
@@ -155,7 +160,7 @@ export function DeveloperAvatar() {
           {/* Core content */}
           <div className="relative text-center">
             <motion.div
-              animate={{
+              animate={shouldReduceMotion ? undefined : {
                 opacity: [0.65, 1, 0.65],
               }}
               transition={{
@@ -175,7 +180,7 @@ export function DeveloperAvatar() {
 
         {/* Technology orbit */}
         <motion.div
-          animate={{ rotate: 360 }}
+          animate={shouldReduceMotion ? undefined : { rotate: 360 }}
           transition={{
             duration: 30,
             repeat: Infinity,
@@ -226,7 +231,7 @@ export function DeveloperAvatar() {
 
         {/* Online indicator */}
         <motion.div
-          animate={{ y: [0, -5, 0] }}
+          animate={shouldReduceMotion ? undefined : { y: [0, -5, 0] }}
           transition={{
             duration: 3,
             repeat: Infinity,
@@ -245,7 +250,7 @@ export function DeveloperAvatar() {
 
         {/* Terminal status */}
         <motion.div
-          animate={{ y: [0, 6, 0] }}
+          animate={shouldReduceMotion ? undefined : { y: [0, 6, 0] }}
           transition={{
             duration: 4,
             repeat: Infinity,
@@ -259,7 +264,8 @@ export function DeveloperAvatar() {
           </div>
 
           <div className="mt-1 flex items-center gap-1">
-            <span className="h-1 w-1 animate-pulse rounded-full bg-accent" />
+            <span className={`h-1 w-1 rounded-full bg-accent ${shouldReduceMotion ? "" : "animate-pulse"}`} 
+            />
 
             <span className="font-mono text-[8px] text-text-muted">
               system.ready
