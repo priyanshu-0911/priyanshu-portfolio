@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 const items = [
   "FULL-STACK DEVELOPER",
@@ -16,6 +16,7 @@ const items = [
 const tickerItems = [...items, ...items];
 
 export function SkillTicker() {
+  const shouldReduceMotion = useReducedMotion();
   return (
     <section
       aria-label="Skills and specialties"
@@ -27,7 +28,7 @@ export function SkillTicker() {
 
       <motion.div
         className="flex w-max items-center"
-        animate={{ x: ["0%", "-50%"] }}
+        animate={shouldReduceMotion ? undefined:{ x: ["0%", "-50%"] }}
         transition={{
           duration: 28,
           repeat: Infinity,

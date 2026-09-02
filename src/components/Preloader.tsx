@@ -1,15 +1,24 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
+import {
+  motion,
+  AnimatePresence,
+  useReducedMotion,
+} from "framer-motion";
 import { useEffect, useState } from "react";
 
 export function Preloader() {
   const [isLoading, setIsLoading] = useState(true);
+  const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 2000);
+    const timer = setTimeout(
+      () => setIsLoading(false),
+      shouldReduceMotion ? 400 : 2000
+    );
+
     return () => clearTimeout(timer);
-  }, []);
+  }, [shouldReduceMotion]);
 
   return (
     <AnimatePresence mode="wait">
@@ -27,17 +36,29 @@ export function Preloader() {
             className="text-center"
           >
             <motion.div
-              animate={{ scale: [1, 1.1, 1] }}
-              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+              animate={
+                shouldReduceMotion
+                  ? undefined
+                  : { scale: [1, 1.1, 1] }
+              }
+              transition={{
+                duration: 1.5,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
               className="text-4xl font-bold text-text-primary"
             >
               Bonjour!<span className="text-accent">.</span>
             </motion.div>
+
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: "100%" }}
-              transition={{ duration: 1.8, ease: "easeInOut" }}
-              className="h-[2px] bg-accent/50 mx-auto mt-4 max-w-[200px] rounded-full"
+              transition={{
+                duration: shouldReduceMotion ? 0.4 : 1.8,
+                ease: "easeInOut",
+              }}
+              className="mx-auto mt-4 h-[2px] max-w-[200px] rounded-full bg-accent/50"
             />
           </motion.div>
         </motion.div>
