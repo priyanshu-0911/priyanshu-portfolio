@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { ArrowDown, ArrowUpRight, Sparkles } from "lucide-react";
 import { useEffect, useState } from "react";
+import { Magnetic } from "@/components/Magnetic";
 
 const words = ["digital experiences", "full-stack systems", "things that matter"];
 
@@ -136,8 +137,10 @@ export function Hero() {
               </p>
 
               <div className="flex flex-wrap items-center gap-4">
+                <Magnetic strength={0.18}>
                 <a
                   href="#projects"
+                  data-cursor="strong"
                   className="group inline-flex items-center gap-3 rounded-full bg-accent px-6 py-3.5 text-sm font-medium text-black transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_0_40px_rgba(45,212,191,0.15)]"
                 >
                   Explore my work
@@ -146,6 +149,7 @@ export function Hero() {
                     className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                   />
                 </a>
+              </Magnetic>
 
                 <a
                   href="#contact"

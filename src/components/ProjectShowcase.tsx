@@ -237,6 +237,7 @@ export function ProjectShowcase() {
                     {project.liveUrl && (
                       <a
                         href={project.liveUrl}
+                        data-cursor="strong"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 text-sm font-medium text-text-primary transition-colors hover:text-accent"
@@ -249,6 +250,7 @@ export function ProjectShowcase() {
                     {project.githubUrl && (
                       <a
                         href={project.githubUrl}
+                        data-cursor="strong"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 text-sm font-medium text-text-primary transition-colors hover:text-accent"
