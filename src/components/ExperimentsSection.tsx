@@ -23,43 +23,57 @@ function ExperimentCard({
 }) {
   const content = (
     <motion.article
-      initial={{ opacity: 0, y: 24 }}
+      initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
+      viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.5, delay: index * 0.08 }}
-      whileHover={{ y: -4 }}
-      className="group relative h-full overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition-colors duration-300 hover:border-white/20 hover:bg-white/[0.05]"
+      className="group border-t border-white/10 py-7 transition-colors duration-300 hover:border-white/25"
     >
-      <div className="mb-8 flex items-start justify-between gap-4">
-        <span className="text-xs uppercase tracking-[0.18em] text-white/40">
-          {statusLabel[experiment.status]}
-        </span>
+      <div className="grid gap-6 md:grid-cols-[80px_1fr_auto] md:items-start">
+        <div className="text-xs font-medium tracking-[0.18em] text-white/25">
+          {String(index + 1).padStart(2, "0")}
+        </div>
 
-        {experiment.href && (
-          <ArrowUpRight
-            size={18}
-            className="text-white/30 transition-all duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-white"
-          />
-        )}
-      </div>
+        <div>
+          <div className="flex items-center gap-3">
+            <h3 className="text-xl font-medium tracking-tight text-white transition-colors duration-300 group-hover:text-white/80 sm:text-2xl">
+              {experiment.title}
+            </h3>
 
-      <h3 className="text-2xl font-medium tracking-tight text-white">
-        {experiment.title}
-      </h3>
+            {experiment.status === "building" && (
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-teal-400/50" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-teal-400" />
+              </span>
+            )}
+          </div>
 
-      <p className="mt-3 max-w-xl text-sm leading-6 text-white/50">
-        {experiment.description}
-      </p>
+          <p className="mt-3 max-w-2xl text-sm leading-6 text-white/45">
+            {experiment.description}
+          </p>
 
-      <div className="mt-8 flex flex-wrap gap-2">
-        {experiment.technologies.map((technology) => (
-          <span
-            key={technology}
-            className="rounded-full border border-white/10 px-3 py-1.5 text-xs text-white/45"
-          >
-            {technology}
-          </span>
-        ))}
+          <div className="mt-5 flex flex-wrap gap-x-4 gap-y-2">
+            {experiment.technologies.map((technology) => (
+              <span
+                key={technology}
+                className="text-xs text-white/30 transition-colors duration-300 group-hover:text-white/45"
+              >
+                {technology}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        <div className="flex items-center gap-3 text-xs uppercase tracking-[0.16em] text-white/25 transition-colors duration-300 group-hover:text-white/60">
+          <span>{statusLabel[experiment.status]}</span>
+
+          {experiment.href && (
+            <ArrowUpRight
+              size={16}
+              className="transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1"
+            />
+          )}
+        </div>
       </div>
     </motion.article>
   );
@@ -70,7 +84,7 @@ function ExperimentCard({
         href={experiment.href}
         target="_blank"
         rel="noopener noreferrer"
-        className="block h-full"
+        className="block"
       >
         {content}
       </a>
@@ -113,10 +127,11 @@ export function ExperimentsSection() {
 
         {/* Currently building */}
         {currentlyBuilding.length > 0 && (
-          <div className="mt-16">
-            <div className="mb-5 text-xs uppercase tracking-[0.18em] text-white/30">
-              Currently building
-            </div>
+          <div className="mt-20">
+            <span className="flex items-center gap-2">
+                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-teal-400" />
+                        Currently building
+                </span>
 
             <div className="grid gap-5">
               {currentlyBuilding.map((experiment, index) => (
@@ -137,14 +152,14 @@ export function ExperimentsSection() {
               Experiments
             </div>
 
-            <div className="grid gap-5 md:grid-cols-2">
-              {experiments.map((experiment, index) => (
+            <div>
+            {experiments.map((experiment, index) => (
                 <ExperimentCard
-                  key={experiment.id}
-                  experiment={experiment}
-                  index={index}
+                key={experiment.id}
+                experiment={experiment}
+                index={index}
                 />
-              ))}
+            ))}
             </div>
           </div>
         )}
