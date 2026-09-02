@@ -1,8 +1,10 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { projects } from "@/data/projects";
+
+const ease = [0.16, 1, 0.3, 1] as const;
 
 const containerVariants = {
   hidden: {},
@@ -23,7 +25,7 @@ const itemVariants = {
     y: 0,
     transition: {
       duration: 0.7,
-      ease: [0.16, 1, 0.3, 1] as const,
+      ease,
     },
   },
 };
@@ -31,21 +33,28 @@ const itemVariants = {
 function ProjectVisual({
   project,
   index,
+  shouldReduceMotion,
 }: {
   project: (typeof projects)[number];
   index: number;
+  shouldReduceMotion: boolean;
 }) {
   return (
     <motion.div
       className="group/visual relative aspect-[16/10] overflow-hidden rounded-2xl border border-border bg-surface"
-      whileHover={{ y: -4 }}
-      transition={{
-        duration: 0.5,
-        ease: [0.16, 1, 0.3, 1],
-      }}
+      whileHover={shouldReduceMotion ? undefined : { y: -4 }}
+      transition={
+        shouldReduceMotion
+          ? undefined
+          : {
+              duration: 0.5,
+              ease,
+            }
+      }
     >
       {/* Grid */}
       <div
+        aria-hidden="true"
         className="absolute inset-0 opacity-[0.045]"
         style={{
           backgroundImage:
@@ -56,61 +65,82 @@ function ProjectVisual({
 
       {/* Ambient glow */}
       <motion.div
+        aria-hidden="true"
         className="absolute left-1/2 top-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/10 blur-[90px]"
-        whileHover={{ scale: 1.35 }}
-        transition={{ duration: 0.7 }}
+        whileHover={shouldReduceMotion ? undefined : { scale: 1.35 }}
+        transition={
+          shouldReduceMotion
+            ? undefined
+            : {
+                duration: 0.7,
+              }
+        }
       />
 
-{/* Project Preview */}
-<a
-  href={project.liveUrl || project.githubUrl || "#"}
-  data-cursor="strong"
-  target="_blank"
-  rel="noopener noreferrer"
-  aria-label={`View ${project.title}`}
-  className="absolute bottom-[8%] left-[6%] right-[6%] top-[8%] block"
->
-  <motion.div
-    className="h-full w-full overflow-hidden rounded-xl border border-white/10 bg-background shadow-2xl"
-    whileHover={{
-      scale: 1.025,
-      y: -6,
-    }}
-    transition={{
-      duration: 0.6,
-      ease: [0.16, 1, 0.3, 1],
-    }}
-  >
-    {/* Browser chrome */}
-    <div className="relative z-10 flex h-9 items-center gap-1.5 border-b border-white/10 bg-background px-3">
-      <span className="h-2 w-2 rounded-full bg-white/20" />
-      <span className="h-2 w-2 rounded-full bg-white/20" />
-      <span className="h-2 w-2 rounded-full bg-white/20" />
+      {/* Project Preview */}
+      <a
+        href={project.liveUrl || project.githubUrl || "#"}
+        data-cursor="strong"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`View ${project.title} project`}
+        className="absolute bottom-[8%] left-[6%] right-[6%] top-[8%] block"
+      >
+        <motion.div
+          className="h-full w-full overflow-hidden rounded-xl border border-white/10 bg-background shadow-2xl"
+          whileHover={
+            shouldReduceMotion
+              ? undefined
+              : {
+                  scale: 1.025,
+                  y: -6,
+                }
+          }
+          transition={
+            shouldReduceMotion
+              ? undefined
+              : {
+                  duration: 0.6,
+                  ease,
+                }
+          }
+        >
+          {/* Browser chrome */}
+          <div
+            aria-hidden="true"
+            className="relative z-10 flex h-9 items-center gap-1.5 border-b border-white/10 bg-background px-3"
+          >
+            <span className="h-2 w-2 rounded-full bg-white/20" />
+            <span className="h-2 w-2 rounded-full bg-white/20" />
+            <span className="h-2 w-2 rounded-full bg-white/20" />
 
-      <div className="mx-auto h-4 w-40 rounded-md bg-white/[0.035]" />
-    </div>
+            <div className="mx-auto h-4 w-40 rounded-md bg-white/[0.035]" />
+          </div>
 
-    {/* Actual project screenshot */}
-    <div className="relative h-[calc(100%-36px)] overflow-hidden">
-      {project.image ? (
-        <img
-          src={project.image}
-          alt={`${project.title} project preview`}
-          loading="lazy"
-          decoding="async"
-          className="h-full w-full object-cover object-top transition-transform duration-700 group-hover/visual:scale-[1.03]"
-        />
-      ) : (
-        <div className="flex h-full items-center justify-center text-xs text-text-muted">
-          Preview coming soon
-        </div>
-      )}
+          {/* Actual project screenshot */}
+          <div className="relative h-[calc(100%-36px)] overflow-hidden">
+            {project.image ? (
+              <img
+                src={project.image}
+                alt={`${project.title} project preview`}
+                loading="lazy"
+                decoding="async"
+                className="h-full w-full object-cover object-top transition-transform duration-700 group-hover/visual:scale-[1.03]"
+              />
+            ) : (
+              <div className="flex h-full items-center justify-center text-xs text-text-muted">
+                Preview coming soon
+              </div>
+            )}
 
-      {/* Subtle overlay */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
-    </div>
-  </motion.div>
-</a>
+            {/* Subtle overlay */}
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"
+            />
+          </div>
+        </motion.div>
+      </a>
 
       {/* Project index */}
       <span className="absolute bottom-5 left-5 font-mono text-xs text-text-muted">
@@ -119,7 +149,10 @@ function ProjectVisual({
 
       {/* Project category badge */}
       <div className="absolute left-5 top-5 flex items-center gap-2 rounded-full border border-white/10 bg-black/30 px-3 py-1.5 backdrop-blur-md">
-        <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+        <span
+          aria-hidden="true"
+          className="h-1.5 w-1.5 rounded-full bg-accent"
+        />
 
         <span className="text-[10px] uppercase tracking-[0.2em] text-white/70">
           {project.category}
@@ -130,18 +163,28 @@ function ProjectVisual({
 }
 
 export function ProjectShowcase() {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
-<section
-  id="projects"
-  className="px-5 py-20 sm:px-10 sm:py-24 lg:px-16 lg:py-28">
-        <div className="mx-auto max-w-7xl">
+    <section
+      id="projects"
+      className="px-5 py-20 sm:px-10 sm:py-24 lg:px-16 lg:py-28"
+    >
+      <div className="mx-auto max-w-7xl">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 25 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={shouldReduceMotion ? undefined : { opacity: 0, y: 25 }}
+          whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.7 }}
-          className="mb-14 sm:mb-20 flex flex-col justify-between gap-6 md:flex-row md:items-end"
+          transition={
+            shouldReduceMotion
+              ? undefined
+              : {
+                  duration: 0.7,
+                  ease,
+                }
+          }
+          className="mb-14 flex flex-col justify-between gap-6 sm:mb-20 md:flex-row md:items-end"
         >
           <div>
             <p className="mb-4 font-mono text-xs uppercase tracking-[0.3em] text-accent">
@@ -161,15 +204,16 @@ export function ProjectShowcase() {
 
         {/* Projects */}
         <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
+          variants={shouldReduceMotion ? undefined : containerVariants}
+          initial={shouldReduceMotion ? undefined : "hidden"}
+          whileInView={shouldReduceMotion ? undefined : "visible"}
           viewport={{ once: true, margin: "-80px" }}
-          className="space-y-20 sm:space-y-24 lg:space-y-28">
+          className="space-y-20 sm:space-y-24 lg:space-y-28"
+        >
           {projects.map((project, index) => (
             <motion.article
               key={project.id}
-              variants={itemVariants}
+              variants={shouldReduceMotion ? undefined : itemVariants}
               className="group"
             >
               <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
@@ -177,31 +221,41 @@ export function ProjectShowcase() {
                 <ProjectVisual
                   project={project}
                   index={index}
+                  shouldReduceMotion={shouldReduceMotion ?? false}
                 />
 
                 {/* Content */}
                 <div className="lg:py-8">
-                <div className="mb-5 flex flex-wrap items-center gap-3">
-  <span className="font-mono text-xs text-text-muted">
-    0{index + 1}
-  </span>
+                  <div className="mb-5 flex flex-wrap items-center gap-3">
+                    <span className="font-mono text-xs text-text-muted">
+                      0{index + 1}
+                    </span>
 
-  <span className="h-px w-8 bg-border" />
+                    <span
+                      aria-hidden="true"
+                      className="h-px w-8 bg-border"
+                    />
 
-  <span className="text-xs uppercase tracking-[0.2em] text-text-muted">
-    {project.category}
-  </span>
+                    <span className="text-xs uppercase tracking-[0.2em] text-text-muted">
+                      {project.category}
+                    </span>
 
-  <span className="h-1 w-1 rounded-full bg-border" />
+                    <span
+                      aria-hidden="true"
+                      className="h-1 w-1 rounded-full bg-border"
+                    />
 
-  <span className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-accent">
-    <span className="h-1.5 w-1.5 rounded-full bg-accent" />
-    {project.status}
-  </span>
-</div>
+                    <span className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-accent">
+                      <span
+                        aria-hidden="true"
+                        className="h-1.5 w-1.5 rounded-full bg-accent"
+                      />
+                      {project.status}
+                    </span>
+                  </div>
 
                   <h3 className="mb-5 text-3xl font-semibold tracking-[-0.03em] text-text-primary sm:text-4xl lg:text-5xl">
-                     {project.title}
+                    {project.title}
                   </h3>
 
                   <p className="mb-7 max-w-xl text-base leading-8 text-text-secondary">
@@ -209,24 +263,27 @@ export function ProjectShowcase() {
                   </p>
 
                   {/* Technologies */}
-<div className="mb-6 flex flex-wrap gap-2">
-  {project.technologies.map((technology) => (
-    <span
-      key={technology}
-      className="rounded-full border border-border px-3 py-1.5 text-xs text-text-secondary transition-colors duration-300 group-hover:border-accent/30 group-hover:text-text-primary"
-    >
-      {technology}
-    </span>
-  ))}
-</div>
+                  <div className="mb-6 flex flex-wrap gap-2">
+                    {project.technologies.map((technology) => (
+                      <span
+                        key={technology}
+                        className="rounded-full border border-border px-3 py-1.5 text-xs text-text-secondary transition-colors duration-300 group-hover:border-accent/30 group-hover:text-text-primary"
+                      >
+                        {technology}
+                      </span>
+                    ))}
+                  </div>
 
-{/* Integration highlight */}
-{project.id === "connect-pro" && (
-  <div className="mb-8 flex items-center gap-3 text-xs text-text-muted">
-    <span className="h-1.5 w-1.5 rounded-full bg-accent" />
-    <span>Razorpay payment integration</span>
-  </div>
-)}
+                  {/* Integration highlight */}
+                  {project.id === "connect-pro" && (
+                    <div className="mb-8 flex items-center gap-3 text-xs text-text-muted">
+                      <span
+                        aria-hidden="true"
+                        className="h-1.5 w-1.5 rounded-full bg-accent"
+                      />
+                      <span>Razorpay payment integration</span>
+                    </div>
+                  )}
 
                   {/* Links */}
                   <div className="flex flex-wrap gap-6">
@@ -236,10 +293,14 @@ export function ProjectShowcase() {
                         data-cursor="strong"
                         target="_blank"
                         rel="noopener noreferrer"
+                        aria-label={`View ${project.title} live project`}
                         className="inline-flex items-center gap-2 text-sm font-medium text-text-primary transition-colors hover:text-accent"
                       >
                         View Project
-                        <ArrowUpRight size={16} />
+                        <ArrowUpRight
+                          size={16}
+                          aria-hidden="true"
+                        />
                       </a>
                     )}
 
@@ -249,10 +310,13 @@ export function ProjectShowcase() {
                         data-cursor="strong"
                         target="_blank"
                         rel="noopener noreferrer"
+                        aria-label={`View ${project.title} on GitHub`}
                         className="inline-flex items-center gap-2 text-sm font-medium text-text-primary transition-colors hover:text-accent"
                       >
                         GitHub
-                        <span className="text-xs font-mono">GH</span>
+                        <span aria-hidden="true" className="text-xs font-mono">
+                          GH
+                        </span>
                       </a>
                     )}
                   </div>
@@ -264,10 +328,17 @@ export function ProjectShowcase() {
 
         {/* Future projects */}
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          initial={shouldReduceMotion ? undefined : { opacity: 0 }}
+          whileInView={shouldReduceMotion ? undefined : { opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.3 }}
+          transition={
+            shouldReduceMotion
+              ? undefined
+              : {
+                  delay: 0.3,
+                  duration: 0.6,
+                }
+          }
           className="mt-20 border-t border-border pt-8 sm:mt-24 lg:mt-32"
         >
           <div className="flex items-center justify-between gap-6">
@@ -275,7 +346,10 @@ export function ProjectShowcase() {
               More experiments coming
             </p>
 
-            <span className="h-px flex-1 bg-border" />
+            <span
+              aria-hidden="true"
+              className="h-px flex-1 bg-border"
+            />
 
             <span className="text-xs text-text-muted">
               02 / ∞
