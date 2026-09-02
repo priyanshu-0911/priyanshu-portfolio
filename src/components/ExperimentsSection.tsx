@@ -2,11 +2,7 @@
 
 import { motion } from "framer-motion";
 import { ArrowUpRight, FlaskConical } from "lucide-react";
-import {
-  currentlyBuilding,
-  experiments,
-  type Experiment,
-} from "@/data/experiments";
+import { currentlyBuilding, experiments, type Experiment} from "@/data/experiments";
 
 const statusLabel: Record<Experiment["status"], string> = {
   building: "Currently building",
@@ -27,9 +23,9 @@ function ExperimentCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.5, delay: index * 0.08 }}
-      className="group border-t border-white/10 py-7 transition-colors duration-300 hover:border-white/25"
+      className="group border-t border-white/10 py-6 sm:py-7 transition-colors duration-300 hover:border-white/25"
     >
-      <div className="grid gap-6 md:grid-cols-[80px_1fr_auto] md:items-start">
+      <div className="grid gap-5 md:grid-cols-[80px_1fr_auto] md:items-start md:gap-6">
         <div className="text-xs font-medium tracking-[0.18em] text-white/25">
           {String(index + 1).padStart(2, "0")}
         </div>
@@ -98,9 +94,9 @@ export function ExperimentsSection() {
   return (
     <section
       id="experiments"
-      className="relative overflow-hidden py-24 sm:py-32"
+      className="relative overflow-hidden py-20 sm:py-24 lg:py-32"
     >
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl px-5 sm:px-10 lg:px-8">
         {/* Section heading */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -127,7 +123,7 @@ export function ExperimentsSection() {
 
         {/* Currently building */}
         {currentlyBuilding.length > 0 && (
-          <div className="mt-20">
+          <div className="mt-14 sm:mt-20">
             <span className="flex items-center gap-2">
                 <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-teal-400" />
                         Currently building
@@ -147,7 +143,7 @@ export function ExperimentsSection() {
 
         {/* Experiments */}
         {experiments.length > 0 && (
-          <div className="mt-16">
+          <div className="mt-12 sm:mt-16">
             <div className="mb-5 text-xs uppercase tracking-[0.18em] text-white/30">
               Experiments
             </div>
