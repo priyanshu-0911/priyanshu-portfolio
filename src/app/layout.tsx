@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import Script from "next/script";
 import "./globals.css";
 import { SmoothScroll } from "@/components/SmoothScroll";
 
@@ -16,23 +15,64 @@ const geistMono = Geist_Mono({
   display: "swap",
 });
 
+const siteUrl = "https://portfolio.priyanshuramchandani41.workers.dev";
+
 export const metadata: Metadata = {
-  title: "Priyanshu Ramchandani — Full-Stack Developer",
+  metadataBase: new URL(siteUrl),
+
+  title: {
+    default: "Priyanshu Ramchandani | Full-Stack Developer",
+    template: "%s | Priyanshu Ramchandani",
+  },
+
   description:
-    "Portfolio of Priyanshu Ramchandani, a Full-Stack Developer and Builder. Showcasing projects in Next.js, TypeScript, and modern web technologies.",
+    "Portfolio of Priyanshu Ramchandani, a Full-Stack Developer building modern web experiences with React, Next.js, TypeScript and backend technologies.",
+
   keywords: [
     "Priyanshu Ramchandani",
     "Full-Stack Developer",
-    "Next.js",
+    "Web Developer",
+    "React Developer",
+    "Next.js Developer",
     "TypeScript",
-    "React",
-    "Portfolio",
+    "JavaScript",
+    "Frontend Developer",
+    "Backend Developer",
+    "India Developer",
   ],
-  authors: [{ name: "Priyanshu Ramchandani" }],
+
+  authors: [
+    {
+      name: "Priyanshu Ramchandani",
+    },
+  ],
+
+  creator: "Priyanshu Ramchandani",
+
+  alternates: {
+    canonical: "/",
+  },
+
   openGraph: {
-    title: "Priyanshu Ramchandani — Full-Stack Developer",
-    description: "Builder · Problem Solver · Constantly Learning",
     type: "website",
+    url: "/",
+    title: "Priyanshu Ramchandani | Full-Stack Developer",
+    description:
+      "Full-Stack Developer building modern web experiences, interfaces and practical digital products.",
+    siteName: "Priyanshu Ramchandani",
+    locale: "en_US",
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "Priyanshu Ramchandani | Full-Stack Developer",
+    description:
+      "Full-Stack Developer building modern web experiences and practical digital products.",
+  },
+
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 
@@ -47,19 +87,6 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} antialiased`}
     >
       <body className="min-h-screen bg-background text-foreground">
-  <Script id="scroll-restoration" strategy="beforeInteractive">
-    {`
-      if ("scrollRestoration" in history) {
-        history.scrollRestoration = "manual";
-      }
-
-      window.addEventListener("pageshow", function (event) {
-        if (event.persisted && !window.location.hash) {
-          window.scrollTo(0, 0);
-        }
-      });
-    `}
-  </Script>
         <SmoothScroll />
         {children}
       </body>
