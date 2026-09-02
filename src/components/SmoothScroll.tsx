@@ -12,7 +12,23 @@ export function SmoothScroll() {
     const hasHash = window.location.hash.length > 0;
 
     if (!hasHash) {
-      window.scrollTo(0, 0);
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "auto",
+      });
+
+      const resetScroll = () => {
+        window.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: "auto",
+        });
+      };
+
+      requestAnimationFrame(resetScroll);
+      setTimeout(resetScroll, 50);
+      setTimeout(resetScroll, 150);
     }
 
     const reducedMotion = window.matchMedia(
