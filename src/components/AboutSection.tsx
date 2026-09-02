@@ -44,7 +44,7 @@ export function AboutSection() {
   return (
     <section
   id="about"
-  className="relative overflow-hidden px-6 py-28 sm:px-10 lg:px-16 lg:py-36"
+  className="relative overflow-hidden px-5 py-20 sm:px-10 sm:py-28 lg:px-16 lg:py-36"
 >
       <div className="mx-auto max-w-7xl">
         <div className="mx-auto max-w-7xl">
@@ -54,7 +54,7 @@ export function AboutSection() {
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true, margin: "-100px" }}
     transition={{ duration: 0.7 }}
-    className="mb-20"
+    className="mb-14 sm:mb-20"
   >
     <p className="mb-4 font-mono text-xs uppercase tracking-[0.3em] text-accent">
       About Me
@@ -68,7 +68,7 @@ export function AboutSection() {
   </motion.div>
 
   {/* Main About layout */}
-  <div className="grid items-center gap-16 lg:grid-cols-[0.85fr_1.15fr] lg:gap-24">
+  <div className="grid items-center gap-12 sm:gap-16 lg:grid-cols-[0.85fr_1.15fr] lg:gap-24">
 
     {/* Avatar */}
     <motion.div
@@ -138,7 +138,7 @@ export function AboutSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.8 }}
-          className="mt-28"
+          className="mt-20 sm:mt-24 lg:mt-28"
         >
           <div className="mb-10 flex items-center gap-4">
             <p className="font-mono text-xs uppercase tracking-[0.3em] text-text-muted">
@@ -162,8 +162,7 @@ export function AboutSection() {
                     duration: 0.5,
                     delay: index * 0.08,
                   }}
-                  className="group relative bg-background p-6 transition-colors duration-500 hover:bg-surface"
-                >
+                       className="group relative bg-background p-5 sm:p-6 transition-colors duration-500 hover:bg-surface"                >
                   <div className="mb-8 flex items-center justify-between">
                     <span className="font-mono text-xs text-accent">
                       {item.year}
