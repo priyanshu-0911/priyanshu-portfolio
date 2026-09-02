@@ -64,6 +64,7 @@ function ProjectVisual({
 {/* Project Preview */}
 <a
   href={project.liveUrl || "#"}
+  data-cursor="strong"
   target={project.liveUrl ? "_blank" : undefined}
   rel={project.liveUrl ? "noopener noreferrer" : undefined}
   aria-label={`View ${project.title}`}

@@ -1,68 +1,107 @@
 "use client";
 
 import { motion } from "framer-motion";
+import {
+  ArrowUpRight,
+  Code2,
+  Mail,
+  MessageCircle,
+} from "lucide-react";
 import { socials } from "@/data/socials";
-import { Mail, Code2, MessageCircle } from "lucide-react";
+
 const contactLinks = [
   {
-    href: socials.email || "#",
+    href: socials.email,
     label: "Email",
     icon: Mail,
-    available: !!socials.email,
+    available: Boolean(socials.email),
   },
   {
     href: socials.github,
     label: "GitHub",
     icon: Code2,
-    available: true,
+    available: Boolean(socials.github),
   },
   {
-    href: socials.whatsapp || "#",
+    href: socials.whatsapp,
     label: "WhatsApp",
     icon: MessageCircle,
-    available: !!socials.whatsapp,
+    available: Boolean(socials.whatsapp),
   },
 ];
 
 export function ContactSection() {
   return (
-<section
-  id="contact"
-  className="px-6 pb-20 pt-12 sm:px-10 lg:px-16 lg:pb-24 lg:pt-16">      
-  <div className="mx-auto max-w-7xl">
+    <section
+      id="contact"
+      className="relative overflow-hidden px-6 pb-24 pt-24 sm:px-10 sm:pb-32 sm:pt-32 lg:px-16"
+    >
+      <div className="mx-auto max-w-7xl">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
-          className="text-center"
+          transition={{ duration: 0.7 }}
+          className="relative overflow-hidden border-y border-white/10 py-16 sm:py-20 lg:py-24"
         >
-          <p className="mb-3 text-sm font-medium tracking-widest uppercase text-text-muted">
-            Contact
-          </p>
-          <h2 className="mb-6 text-3xl font-semibold tracking-tight text-text-primary sm:text-4xl">
-            Let&apos;s work together
-          </h2>
-          <p className="mx-auto mb-12 max-w-lg text-text-secondary">
-            Have a project in mind or just want to say hi? I&apos;m always open
-            to discussing new opportunities.
-          </p>
+          {/* Ambient accent */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -right-32 -top-32 h-72 w-72 rounded-full bg-accent/10 blur-3xl"
+          />
 
-          <div className="flex flex-wrap justify-center gap-4">
-            {contactLinks
-              .filter((link) => link.available)
-              .map((link) => (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex h-12 items-center gap-3 rounded-full border border-border bg-surface px-6 text-sm text-text-secondary transition-all duration-300 hover:scale-105 hover:border-accent hover:shadow-[0_0_20px_rgba(45,212,191,0.15)] hover:text-text-primary"
-                >
-                  <link.icon className="h-4 w-4" />
-                  {link.label}
-                </a>
-              ))}
+          <div className="relative grid gap-12 lg:grid-cols-[1fr_auto] lg:items-end">
+            <div>
+              <p className="mb-6 text-xs font-medium uppercase tracking-[0.2em] text-text-muted">
+                Have an idea?
+              </p>
+
+              <h2 className="max-w-4xl text-5xl font-semibold tracking-[-0.04em] text-text-primary sm:text-6xl lg:text-7xl">
+                Let&apos;s build
+                <br />
+                <span className="text-text-muted">something interesting.</span>
+              </h2>
+
+              <p className="mt-7 max-w-xl text-base leading-7 text-text-secondary sm:text-lg">
+                Have a project, opportunity, collaboration, or simply
+                something interesting to discuss? I&apos;d love to hear about
+                it.
+              </p>
+            </div>
+
+            <div className="flex flex-col items-start gap-4 lg:items-end">
+              {contactLinks
+                .filter((link) => link.available)
+                .map((link, index) => {
+                  const Icon = link.icon;
+
+                  return (
+                    <motion.a
+                      key={link.label}
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      initial={{ opacity: 0, x: 16 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{
+                        duration: 0.45,
+                        delay: 0.15 + index * 0.08,
+                      }}
+                      whileHover={{ x: 5 }}
+                      className="group inline-flex items-center gap-3 text-sm text-text-secondary transition-colors duration-300 hover:text-text-primary"
+                    >
+                      <Icon className="h-4 w-4" />
+
+                      <span>{link.label}</span>
+
+                      <ArrowUpRight
+                        className="h-4 w-4 opacity-40 transition-all duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:opacity-100"
+                      />
+                    </motion.a>
+                  );
+                })}
+            </div>
           </div>
         </motion.div>
       </div>
