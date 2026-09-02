@@ -96,6 +96,8 @@ function ProjectVisual({
         <img
           src={project.image}
           alt={`${project.title} project preview`}
+          loading="lazy"
+          decoding="async"
           className="h-full w-full object-cover object-top transition-transform duration-700 group-hover/visual:scale-[1.03]"
         />
       ) : (
