@@ -37,7 +37,9 @@ export function Hero() {
   }, [subIndex, index, reverse]);
 
   return (
-    <section className="relative min-h-[100svh] overflow-hidden border-b border-border">
+    <section 
+      id="hero"
+      className="relative min-h-[100svh] overflow-hidden border-b border-border">
       {/* Ambient background */}
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute inset-0 opacity-[0.035] [background-image:linear-gradient(rgba(255,255,255,1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,1)_1px,transparent_1px)] [background-size:80px_80px]" />
