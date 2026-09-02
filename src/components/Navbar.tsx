@@ -41,7 +41,7 @@ export function Navbar() {
 
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="rounded-lg p-2 text-text-secondary transition-colors hover:text-text-primary md:hidden"
+            className="flex min-h-11 min-w-11 items-center justify-center rounded-lg text-text-secondary transition-colors hover:text-text-primary md:hidden"
             aria-label="Toggle menu"
           >
             {isOpen ? <X size={20} /> : <Menu size={20} />}
