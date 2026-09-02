@@ -17,6 +17,7 @@ const tickerItems = [...items, ...items];
 
 export function SkillTicker() {
   const shouldReduceMotion = useReducedMotion();
+
   return (
     <section
       aria-label="Skills and specialties"
@@ -28,26 +29,33 @@ export function SkillTicker() {
 
       <motion.div
         className="flex w-max items-center"
-        animate={shouldReduceMotion ? undefined:{ x: ["0%", "-50%"] }}
-        transition={{
-          duration: 28,
-          repeat: Infinity,
-          ease: "linear",
-        }}
+        animate={
+          shouldReduceMotion
+            ? undefined
+            : { x: ["0%", "-50%"] }
+        }
+        transition={
+          shouldReduceMotion
+            ? undefined
+            : {
+                duration: 28,
+                repeat: Infinity,
+                ease: "linear",
+              }
+        }
       >
         {tickerItems.map((item, index) => (
           <div
             key={`${item}-${index}`}
             className="flex items-center"
           >
-            <span className="px-6 text-sm font-medium uppercase tracking-[0.22em] text-text-secondary transition-colors duration-300 hover:text-text-primary sm:px-8 sm:text-base"
-            >
+            <span className="px-6 text-sm font-medium uppercase tracking-[0.22em] text-text-secondary transition-colors duration-300 hover:text-text-primary sm:px-8 sm:text-base">
               {item}
             </span>
 
             <span
               aria-hidden="true"
-              className="text-accent text-xs"
+              className="text-xs text-accent"
             >
               ✦
             </span>
