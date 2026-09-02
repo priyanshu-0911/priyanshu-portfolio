@@ -24,12 +24,12 @@ export default function Home() {
         <InteractiveStack />
         <ExperimentsSection />
         <ContactSection />
+        <SkillTicker />
       </main>
       <Footer />
       <Preloader />
       <ScrollProgress />
       <CursorGlow />
-      <SkillTicker />
       
     </>
   );

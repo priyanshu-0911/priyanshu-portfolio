@@ -47,6 +47,19 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} antialiased`}
     >
       <body className="min-h-screen bg-background text-foreground">
+  <Script id="scroll-restoration" strategy="beforeInteractive">
+    {`
+      if ("scrollRestoration" in history) {
+        history.scrollRestoration = "manual";
+      }
+
+      window.addEventListener("pageshow", function (event) {
+        if (event.persisted && !window.location.hash) {
+          window.scrollTo(0, 0);
+        }
+      });
+    `}
+  </Script>
         <SmoothScroll />
         {children}
       </body>
