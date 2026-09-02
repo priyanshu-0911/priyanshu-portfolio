@@ -5,26 +5,14 @@ import Lenis from "lenis";
 
 export function SmoothScroll() {
   useEffect(() => {
-    if ("scrollRestoration" in history) {
-      history.scrollRestoration = "manual";
-    }
-
-    const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
-
-    // Mobile / touch devices use native scrolling.
-    if (isTouchDevice) {
-      if (!window.location.hash) {
-        window.scrollTo(0, 0);
-      }
-
-      return;
-    }
-
     const reducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches;
 
-    if (reducedMotion) {
+    const touchDevice = window.matchMedia("(pointer: coarse)").matches;
+
+    // Mobile / touch devices use native scrolling.
+    if (reducedMotion || touchDevice) {
       return;
     }
 
