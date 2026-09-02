@@ -99,9 +99,7 @@ const structuredData = {
         "GSAP",
         "3D Web Development",
       ],
-      sameAs: [
-        "https://github.com/priyanshu-0911",
-      ],
+      sameAs: ["https://github.com/priyanshu-0911"],
     },
     {
       "@type": "WebSite",
@@ -128,6 +126,20 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} antialiased`}
     >
       <body className="min-h-screen bg-background text-foreground">
+        <Script id="scroll-restoration" strategy="beforeInteractive">
+          {`
+            if ("scrollRestoration" in history) {
+              history.scrollRestoration = "manual";
+            }
+
+            window.addEventListener("pageshow", function (event) {
+              if (event.persisted && !window.location.hash) {
+                window.scrollTo(0, 0);
+              }
+            });
+          `}
+        </Script>
+
         <Script
           id="structured-data"
           type="application/ld+json"
