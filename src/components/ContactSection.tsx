@@ -34,7 +34,7 @@ export function ContactSection() {
   return (
     <section
       id="contact"
-      className="relative overflow-hidden px-6 pb-24 pt-24 sm:px-10 sm:pb-32 sm:pt-32 lg:px-16"
+      className="relative overflow-hidden px-5 pb-20 pt-20 sm:px-10 sm:pb-28 sm:pt-28 lg:px-16 lg:pb-32 lg:pt-32"
     >
       <div className="mx-auto max-w-7xl">
         <motion.div
@@ -42,7 +42,7 @@ export function ContactSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.7 }}
-          className="relative overflow-hidden border-y border-white/10 py-16 sm:py-20 lg:py-24"
+          className="relative overflow-hidden border-y border-white/10 py-12 sm:py-20 lg:py-24"
         >
           {/* Ambient accent */}
           <div
@@ -50,13 +50,13 @@ export function ContactSection() {
             className="pointer-events-none absolute -right-32 -top-32 h-72 w-72 rounded-full bg-accent/10 blur-3xl"
           />
 
-          <div className="relative grid gap-12 lg:grid-cols-[1fr_auto] lg:items-end">
+          <div className="relative grid gap-10 sm:gap-12 lg:grid-cols-[1fr_auto] lg:items-end">
             <div>
               <p className="mb-6 text-xs font-medium uppercase tracking-[0.2em] text-text-muted">
                 Have an idea?
               </p>
 
-              <h2 className="max-w-4xl text-5xl font-semibold tracking-[-0.04em] text-text-primary sm:text-6xl lg:text-7xl">
+              <h2 className="max-w-4xl text-[2.75rem] font-semibold leading-[0.95] tracking-[-0.04em] text-text-primary sm:text-6xl lg:text-7xl">
                 Let&apos;s build
                 <br />
                 <span className="text-text-muted">something interesting.</span>
@@ -89,7 +89,7 @@ export function ContactSection() {
                         delay: 0.15 + index * 0.08,
                       }}
                       whileHover={{ x: 5 }}
-                      className="group inline-flex items-center gap-3 text-sm text-text-secondary transition-colors duration-300 hover:text-text-primary"
+                      className="group inline-flex min-h-11 items-center gap-3 text-sm text-text-secondary transition-colors duration-300 hover:text-text-primary"
                     >
                       <Icon className="h-4 w-4" />
 
