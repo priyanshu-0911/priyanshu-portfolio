@@ -1,18 +1,28 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { ArrowDown, ArrowUpRight, Sparkles } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Magnetic } from "@/components/Magnetic";
 
-const words = ["digital experiences", "full-stack systems", "things that matter"];
+const words = [
+  "digital experiences",
+  "full-stack systems",
+  "things that matter",
+];
 
 export function Hero() {
+  const shouldReduceMotion = useReducedMotion();
+
   const [index, setIndex] = useState(0);
   const [subIndex, setSubIndex] = useState(0);
   const [reverse, setReverse] = useState(false);
 
   useEffect(() => {
+    if (shouldReduceMotion) {
+      return;
+    }
+
     const currentWord = words[index];
 
     if (subIndex === currentWord.length && !reverse) {
@@ -34,21 +44,26 @@ export function Hero() {
     );
 
     return () => clearTimeout(timeout);
-  }, [subIndex, index, reverse]);
+  }, [subIndex, index, reverse, shouldReduceMotion]);
 
   return (
-    <section 
+    <section
       id="hero"
-      className="relative min-h-[100svh] overflow-hidden border-b border-border">
+      className="relative min-h-[100svh] overflow-hidden border-b border-border"
+    >
       {/* Ambient background */}
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute inset-0 opacity-[0.035] [background-image:linear-gradient(rgba(255,255,255,1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,1)_1px,transparent_1px)] [background-size:80px_80px]" />
 
         <motion.div
-          animate={{
-            scale: [1, 1.15, 1],
-            opacity: [0.08, 0.16, 0.08],
-          }}
+          animate={
+            shouldReduceMotion
+              ? undefined
+              : {
+                  scale: [1, 1.15, 1],
+                  opacity: [0.08, 0.16, 0.08],
+                }
+          }
           transition={{
             duration: 9,
             repeat: Infinity,
@@ -58,10 +73,14 @@ export function Hero() {
         />
 
         <motion.div
-          animate={{
-            x: [0, -80, 0],
-            y: [0, 50, 0],
-          }}
+          animate={
+            shouldReduceMotion
+              ? undefined
+              : {
+                  x: [0, -80, 0],
+                  y: [0, 50, 0],
+                }
+          }
           transition={{
             duration: 12,
             repeat: Infinity,
@@ -77,16 +96,21 @@ export function Hero() {
       <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-[1500px] flex-col justify-between px-5 pb-6 pt-28 sm:px-10 sm:pt-32 lg:px-16">
         {/* Top metadata */}
         <motion.div
-          initial={{ opacity: 0, y: -15 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={shouldReduceMotion ? undefined : { opacity: 0, y: -15 }}
+          animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.15 }}
           className="flex items-center justify-between"
         >
           <div className="flex items-center gap-3 text-[11px] uppercase tracking-[0.25em] text-text-muted">
             <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-60" />
+              <span
+                className={`absolute inline-flex h-full w-full rounded-full bg-accent opacity-60 ${
+                  shouldReduceMotion ? "" : "animate-ping"
+                }`}
+              />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
             </span>
+
             Available for opportunities
           </div>
 
@@ -100,8 +124,8 @@ export function Hero() {
           {/* Typography */}
           <div>
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={shouldReduceMotion ? undefined : { opacity: 0, y: 20 }}
+              animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.3 }}
               className="mb-6 text-xs font-medium uppercase tracking-[0.3em] text-text-muted"
             >
@@ -109,26 +133,35 @@ export function Hero() {
             </motion.p>
 
             <motion.h1
-              initial={{ opacity: 0, y: 35 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={shouldReduceMotion ? undefined : { opacity: 0, y: 35 }}
+              animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 0.4 }}
-              className="max-w-5xl text-[clamp(3rem,14vw,9rem)] font-semibold leading-[0.88] tracking-[-0.065em] text-text-primary">              Priyanshu
+              className="max-w-5xl text-[clamp(3rem,14vw,9rem)] font-semibold leading-[0.88] tracking-[-0.065em] text-text-primary"
+            >
+              Priyanshu
               <br />
               <span className="text-text-secondary">Ramchandani</span>
             </motion.h1>
 
             <motion.div
-              initial={{ opacity: 0, y: 25 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={shouldReduceMotion ? undefined : { opacity: 0, y: 25 }}
+              animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.65 }}
               className="mt-10 flex max-w-2xl flex-col gap-7"
             >
               <p className="text-xl leading-relaxed text-text-secondary sm:text-2xl">
                 I build{" "}
                 <span className="text-text-primary">
-                  {words[index].substring(0, subIndex)}
+                  {shouldReduceMotion
+                    ? words[0]
+                    : words[index].substring(0, subIndex)}
                 </span>
-                <span className="ml-1 inline-block h-6 w-[2px] translate-y-1 animate-pulse bg-accent" />
+
+                <span
+                  className={`ml-1 inline-block h-6 w-[2px] translate-y-1 bg-accent ${
+                    shouldReduceMotion ? "" : "animate-pulse"
+                  }`}
+                />
               </p>
 
               <p className="max-w-xl text-sm leading-7 text-text-muted sm:text-base">
@@ -136,25 +169,28 @@ export function Hero() {
                 automation and emerging technology through real projects.
               </p>
 
-              <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4"> 
+              <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
                 <Magnetic strength={0.18}>
-                <a
-                  href="#projects"
-                  data-cursor="strong"
-                  className="group inline-flex w-full items-center gap-3 rounded-full bg-accent px-6 py-3.5 text-sm font-medium text-black transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_0_40px_rgba(45,212,191,0.15)] sm:w-auto"
-                >
-                  Explore my work
-                  <ArrowUpRight
-                    size={17}
-                    className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                  />
-                </a>
-              </Magnetic>
+                  <a
+                    href="#projects"
+                    data-cursor="strong"
+                    className="group inline-flex w-full items-center gap-3 rounded-full bg-accent px-6 py-3.5 text-sm font-medium text-black transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_0_40px_rgba(45,212,191,0.15)] sm:w-auto"
+                  >
+                    Explore my work
+
+                    <ArrowUpRight
+                      size={17}
+                      className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                    />
+                  </a>
+                </Magnetic>
 
                 <a
                   href="#contact"
-                  className="group inline-flex w-full items-center gap-3 rounded-full border border-border-strong px-6 py-3.5 text-sm font-medium text-text-primary transition-all duration-300 hover:border-accent/50 hover:bg-white/[0.03] sm:w-auto"                >
+                  className="group inline-flex w-full items-center gap-3 rounded-full border border-border-strong px-6 py-3.5 text-sm font-medium text-text-primary transition-all duration-300 hover:border-accent/50 hover:bg-white/[0.03] sm:w-auto"
+                >
                   Start a conversation
+
                   <ArrowUpRight
                     size={17}
                     className="text-text-muted transition-colors group-hover:text-accent"
@@ -166,14 +202,24 @@ export function Hero() {
 
           {/* Interactive visual */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
+            initial={
+              shouldReduceMotion
+                ? undefined
+                : { opacity: 0, scale: 0.9 }
+            }
+            animate={
+              shouldReduceMotion
+                ? undefined
+                : { opacity: 1, scale: 1 }
+            }
             transition={{ duration: 1.2, delay: 0.5 }}
             className="relative mx-auto aspect-square w-full max-w-[300px] sm:max-w-[360px] lg:max-w-[440px]"
           >
             {/* Outer rings */}
             <motion.div
-              animate={{ rotate: 360 }}
+              animate={
+                shouldReduceMotion ? undefined : { rotate: 360 }
+              }
               transition={{
                 duration: 35,
                 repeat: Infinity,
@@ -183,7 +229,9 @@ export function Hero() {
             />
 
             <motion.div
-              animate={{ rotate: -360 }}
+              animate={
+                shouldReduceMotion ? undefined : { rotate: -360 }
+              }
               transition={{
                 duration: 24,
                 repeat: Infinity,
@@ -194,10 +242,14 @@ export function Hero() {
 
             {/* Core */}
             <motion.div
-              animate={{
-                rotate: [0, 8, -8, 0],
-                scale: [1, 1.04, 1],
-              }}
+              animate={
+                shouldReduceMotion
+                  ? undefined
+                  : {
+                      rotate: [0, 8, -8, 0],
+                      scale: [1, 1.04, 1],
+                    }
+              }
               transition={{
                 duration: 7,
                 repeat: Infinity,
@@ -208,10 +260,14 @@ export function Hero() {
               <div className="absolute inset-[12%] rounded-[25%] border border-white/[0.08]" />
 
               <motion.div
-                animate={{
-                  scale: [0.8, 1, 0.8],
-                  opacity: [0.25, 0.5, 0.25],
-                }}
+                animate={
+                  shouldReduceMotion
+                    ? undefined
+                    : {
+                        scale: [0.8, 1, 0.8],
+                        opacity: [0.25, 0.5, 0.25],
+                      }
+                }
                 transition={{
                   duration: 4,
                   repeat: Infinity,
@@ -230,10 +286,14 @@ export function Hero() {
             ].map((point, i) => (
               <motion.div
                 key={i}
-                animate={{
-                  y: [0, -12, 0],
-                  opacity: [0.4, 1, 0.4],
-                }}
+                animate={
+                  shouldReduceMotion
+                    ? undefined
+                    : {
+                        y: [0, -12, 0],
+                        opacity: [0.4, 1, 0.4],
+                      }
+                }
                 transition={{
                   duration: 3 + i,
                   delay: point.delay,
@@ -258,8 +318,8 @@ export function Hero() {
 
         {/* Bottom */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          initial={shouldReduceMotion ? undefined : { opacity: 0 }}
+          animate={shouldReduceMotion ? undefined : { opacity: 1 }}
           transition={{ duration: 1, delay: 1.1 }}
           className="flex items-end justify-between"
         >
@@ -276,10 +336,11 @@ export function Hero() {
             className="group ml-auto flex items-center gap-3 text-[10px] uppercase tracking-[0.25em] text-text-muted transition-colors hover:text-text-primary"
           >
             Scroll to explore
+
             <span className="flex h-9 w-9 items-center justify-center rounded-full border border-border-strong transition-all duration-300 group-hover:border-accent group-hover:text-accent">
               <ArrowDown
                 size={14}
-                className="animate-bounce"
+                className={shouldReduceMotion ? "" : "animate-bounce"}
               />
             </span>
           </a>
