@@ -9,26 +9,15 @@ export function SmoothScroll() {
       history.scrollRestoration = "manual";
     }
 
-    const hasHash = window.location.hash.length > 0;
+    const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
 
-    if (!hasHash) {
-      window.scrollTo({
-        top: 0,
-        left: 0,
-        behavior: "auto",
-      });
+    // Mobile / touch devices use native scrolling.
+    if (isTouchDevice) {
+      if (!window.location.hash) {
+        window.scrollTo(0, 0);
+      }
 
-      const resetScroll = () => {
-        window.scrollTo({
-          top: 0,
-          left: 0,
-          behavior: "auto",
-        });
-      };
-
-      requestAnimationFrame(resetScroll);
-      setTimeout(resetScroll, 50);
-      setTimeout(resetScroll, 150);
+      return;
     }
 
     const reducedMotion = window.matchMedia(
