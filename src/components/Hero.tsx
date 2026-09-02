@@ -74,7 +74,7 @@ export function Hero() {
       </div>
 
       {/* Main content */}
-      <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-[1500px] flex-col justify-between px-6 pb-8 pt-32 sm:px-10 lg:px-16">
+      <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-[1500px] flex-col justify-between px-5 pb-6 pt-28 sm:px-10 sm:pt-32 lg:px-16">
         {/* Top metadata */}
         <motion.div
           initial={{ opacity: 0, y: -15 }}
@@ -112,9 +112,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 35 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 0.4 }}
-              className="max-w-5xl text-[clamp(3.5rem,9vw,9rem)] font-semibold leading-[0.86] tracking-[-0.065em] text-text-primary"
-            >
-              Priyanshu
+              className="max-w-5xl text-[clamp(3rem,14vw,9rem)] font-semibold leading-[0.88] tracking-[-0.065em] text-text-primary">              Priyanshu
               <br />
               <span className="text-text-secondary">Ramchandani</span>
             </motion.h1>
@@ -138,12 +136,12 @@ export function Hero() {
                 automation and emerging technology through real projects.
               </p>
 
-              <div className="flex flex-wrap items-center gap-4">
+              <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4"> 
                 <Magnetic strength={0.18}>
                 <a
                   href="#projects"
                   data-cursor="strong"
-                  className="group inline-flex items-center gap-3 rounded-full bg-accent px-6 py-3.5 text-sm font-medium text-black transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_0_40px_rgba(45,212,191,0.15)]"
+                  className="group inline-flex w-full items-center gap-3 rounded-full bg-accent px-6 py-3.5 text-sm font-medium text-black transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_0_40px_rgba(45,212,191,0.15)] sm:w-auto"
                 >
                   Explore my work
                   <ArrowUpRight
@@ -155,8 +153,7 @@ export function Hero() {
 
                 <a
                   href="#contact"
-                  className="group inline-flex items-center gap-3 rounded-full border border-border-strong px-6 py-3.5 text-sm font-medium text-text-primary transition-all duration-300 hover:border-accent/50 hover:bg-white/[0.03]"
-                >
+                  className="group inline-flex w-full items-center gap-3 rounded-full border border-border-strong px-6 py-3.5 text-sm font-medium text-text-primary transition-all duration-300 hover:border-accent/50 hover:bg-white/[0.03] sm:w-auto"                >
                   Start a conversation
                   <ArrowUpRight
                     size={17}
@@ -172,7 +169,7 @@ export function Hero() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.2, delay: 0.5 }}
-            className="relative mx-auto aspect-square w-full max-w-[440px]"
+            className="relative mx-auto aspect-square w-full max-w-[300px] sm:max-w-[360px] lg:max-w-[440px]"
           >
             {/* Outer rings */}
             <motion.div
