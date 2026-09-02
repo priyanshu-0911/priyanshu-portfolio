@@ -1,8 +1,12 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, FlaskConical } from "lucide-react";
-import { currentlyBuilding, experiments, type Experiment} from "@/data/experiments";
+import {
+  currentlyBuilding,
+  experiments,
+  type Experiment,
+} from "@/data/experiments";
 
 const statusLabel: Record<Experiment["status"], string> = {
   building: "Currently building",
@@ -13,23 +17,42 @@ const statusLabel: Record<Experiment["status"], string> = {
 function ExperimentCard({
   experiment,
   index,
+  shouldReduceMotion,
 }: {
   experiment: Experiment;
   index: number;
+  shouldReduceMotion: boolean | null;
 }) {
   const content = (
     <motion.article
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={
+        shouldReduceMotion
+          ? undefined
+          : { opacity: 0, y: 20 }
+      }
+      whileInView={
+        shouldReduceMotion
+          ? undefined
+          : { opacity: 1, y: 0 }
+      }
       viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.5, delay: index * 0.08 }}
-      className="group border-t border-white/10 py-6 sm:py-7 transition-colors duration-300 hover:border-white/25"
+      transition={
+        shouldReduceMotion
+          ? undefined
+          : {
+              duration: 0.5,
+              delay: index * 0.08,
+            }
+      }
+      className="group border-t border-white/10 py-6 transition-colors duration-300 hover:border-white/25 sm:py-7"
     >
       <div className="grid gap-5 md:grid-cols-[80px_1fr_auto] md:items-start md:gap-6">
+        {/* Index */}
         <div className="text-xs font-medium tracking-[0.18em] text-white/25">
           {String(index + 1).padStart(2, "0")}
         </div>
 
+        {/* Content */}
         <div>
           <div className="flex items-center gap-3">
             <h3 className="text-xl font-medium tracking-tight text-white transition-colors duration-300 group-hover:text-white/80 sm:text-2xl">
@@ -60,6 +83,7 @@ function ExperimentCard({
           </div>
         </div>
 
+        {/* Status / Link indicator */}
         <div className="flex items-center gap-3 text-xs uppercase tracking-[0.16em] text-white/25 transition-colors duration-300 group-hover:text-white/60">
           <span>{statusLabel[experiment.status]}</span>
 
@@ -91,6 +115,8 @@ function ExperimentCard({
 }
 
 export function ExperimentsSection() {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <section
       id="experiments"
@@ -99,10 +125,22 @@ export function ExperimentsSection() {
       <div className="mx-auto max-w-7xl px-5 sm:px-10 lg:px-8">
         {/* Section heading */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={
+            shouldReduceMotion
+              ? undefined
+              : { opacity: 0, y: 20 }
+          }
+          whileInView={
+            shouldReduceMotion
+              ? undefined
+              : { opacity: 1, y: 0 }
+          }
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          transition={
+            shouldReduceMotion
+              ? undefined
+              : { duration: 0.5 }
+          }
           className="max-w-2xl"
         >
           <div className="mb-4 flex items-center gap-3 text-xs uppercase tracking-[0.2em] text-white/40">
@@ -116,18 +154,22 @@ export function ExperimentsSection() {
           </h2>
 
           <p className="mt-5 text-base leading-7 text-white/50">
-            Not everything needs to become a finished project. These are the
-            ideas, technologies, and interfaces I&apos;m actively exploring.
+            Not everything needs to become a finished project. These are
+            the ideas, technologies, and interfaces I&apos;m actively
+            exploring.
           </p>
         </motion.div>
 
         {/* Currently building */}
         {currentlyBuilding.length > 0 && (
           <div className="mt-14 sm:mt-20">
-            <span className="flex items-center gap-2">
-                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-teal-400" />
-                        Currently building
-                </span>
+            <span className="flex items-center gap-2 text-sm text-white/60">
+              <span
+                className="h-1.5 w-1.5 animate-pulse rounded-full bg-teal-400"
+                aria-hidden="true"
+              />
+              Currently building
+            </span>
 
             <div className="grid gap-5">
               {currentlyBuilding.map((experiment, index) => (
@@ -135,6 +177,7 @@ export function ExperimentsSection() {
                   key={experiment.id}
                   experiment={experiment}
                   index={index}
+                  shouldReduceMotion={shouldReduceMotion}
                 />
               ))}
             </div>
@@ -149,13 +192,14 @@ export function ExperimentsSection() {
             </div>
 
             <div>
-            {experiments.map((experiment, index) => (
+              {experiments.map((experiment, index) => (
                 <ExperimentCard
-                key={experiment.id}
-                experiment={experiment}
-                index={index}
+                  key={experiment.id}
+                  experiment={experiment}
+                  index={index}
+                  shouldReduceMotion={shouldReduceMotion}
                 />
-            ))}
+              ))}
             </div>
           </div>
         )}
