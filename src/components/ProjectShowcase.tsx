@@ -63,16 +63,11 @@ function ProjectVisual({
 
 {/* Project Preview */}
 <a
-  href={project.liveUrl || "#"}
+  href={project.liveUrl || project.githubUrl || "#"}
   data-cursor="strong"
-  target={project.liveUrl ? "_blank" : undefined}
-  rel={project.liveUrl ? "noopener noreferrer" : undefined}
+  target="_blank"
+  rel="noopener noreferrer"
   aria-label={`View ${project.title}`}
-  onClick={(event) => {
-    if (!project.liveUrl) {
-      event.preventDefault();
-    }
-  }}
   className="absolute bottom-[8%] left-[6%] right-[6%] top-[8%] block"
 >
   <motion.div
@@ -136,7 +131,7 @@ export function ProjectShowcase() {
   return (
 <section
   id="projects"
-  className="px-6 py-24 sm:px-10 lg:px-16 lg:py-28">
+  className="px-5 py-20 sm:px-10 sm:py-24 lg:px-16 lg:py-28">
         <div className="mx-auto max-w-7xl">
         {/* Header */}
         <motion.div
@@ -168,8 +163,7 @@ export function ProjectShowcase() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-80px" }}
-          className="space-y-28"
-        >
+          className="space-y-20 sm:space-y-24 lg:space-y-28">
           {projects.map((project, index) => (
             <motion.article
               key={project.id}
@@ -272,7 +266,7 @@ export function ProjectShowcase() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.3 }}
-          className="mt-32 border-t border-border pt-8"
+          className="mt-20 border-t border-border pt-8 sm:mt-24 lg:mt-32"
         >
           <div className="flex items-center justify-between gap-6">
             <p className="font-mono text-xs uppercase tracking-[0.2em] text-text-muted">
