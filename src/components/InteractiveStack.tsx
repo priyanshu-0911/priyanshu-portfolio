@@ -1,34 +1,35 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, type ReactNode } from "react";
 import {
-  motion,
   AnimatePresence,
+  motion,
   useMotionValue,
+  useReducedMotion,
   useSpring,
   useTransform,
 } from "framer-motion";
 import {
+  ArrowUpRight,
   Database,
   Globe,
   Layers3,
   Server,
   Wrench,
-  ArrowUpRight,
 } from "lucide-react";
 import {
-  siReact,
-  siNextdotjs,
-  siTypescript,
-  siTailwindcss,
-  siNodedotjs,
-  siMysql,
+  siCloudflare,
   siFramer,
   siGit,
   siGithub,
-  siCloudflare,
-  siThreedotjs,
   siGreensock,
+  siMysql,
+  siNextdotjs,
+  siNodedotjs,
+  siReact,
+  siTailwindcss,
+  siThreedotjs,
+  siTypescript,
 } from "simple-icons";
 
 type Category =
@@ -43,9 +44,9 @@ type Technology = {
   description: string;
   category: Category;
   icon: {
-  title: string;
-  path: string;
-};
+    title: string;
+    path: string;
+  };
   tags: string[];
 };
 
@@ -192,10 +193,11 @@ function MagneticButton({
   active,
   onClick,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
   active: boolean;
   onClick: () => void;
 }) {
+  const shouldReduceMotion = useReducedMotion();
   const ref = useRef<HTMLButtonElement>(null);
 
   const x = useMotionValue(0);
@@ -216,7 +218,7 @@ function MagneticButton({
   const handleMouseMove = (
     event: React.MouseEvent<HTMLButtonElement>,
   ) => {
-    if (!ref.current) return;
+    if (shouldReduceMotion || !ref.current) return;
 
     const rect = ref.current.getBoundingClientRect();
 
@@ -242,34 +244,50 @@ function MagneticButton({
       onClick={onClick}
       onMouseMove={handleMouseMove}
       onMouseLeave={reset}
-      style={{
-        x: springX,
-        y: springY,
-      }}
-      whileTap={{
-        scale: 0.985,
-      }}
-        className="group relative flex min-h-11 w-full items-center gap-4 rounded-xl px-4 py-3.5 text-left sm:py-4">
-      {active && (
-        <motion.div
-          layoutId="active-stack-category"
-          className="absolute inset-0 rounded-xl bg-white/[0.035]"
-          transition={{
-            type: "spring",
-            stiffness: 350,
-            damping: 30,
-          }}
-        />
-      )}
+      style={
+        shouldReduceMotion
+          ? undefined
+          : {
+              x: springX,
+              y: springY,
+            }
+      }
+      whileTap={
+        shouldReduceMotion
+          ? undefined
+          : {
+              scale: 0.985,
+            }
+      }
+      className="group relative flex min-h-11 w-full items-center gap-4 rounded-xl px-4 py-3.5 text-left sm:py-4"
+    >
+      {active &&
+        (shouldReduceMotion ? (
+          <div className="absolute inset-0 rounded-xl bg-white/[0.035]" />
+        ) : (
+          <motion.div
+            layoutId="active-stack-category"
+            className="absolute inset-0 rounded-xl bg-white/[0.035]"
+            transition={{
+              type: "spring",
+              stiffness: 350,
+              damping: 30,
+            }}
+          />
+        ))}
 
       <motion.span
         animate={{
-          scale: active ? 1 : 0.7,
-          opacity: active ? 1 : 0.35,
+          scale: shouldReduceMotion ? 1 : active ? 1 : 0.7,
+          opacity: shouldReduceMotion ? 1 : active ? 1 : 0.35,
         }}
-        transition={{
-          duration: 0.25,
-        }}
+        transition={
+          shouldReduceMotion
+            ? undefined
+            : {
+                duration: 0.25,
+              }
+        }
         className="relative z-10 h-1.5 w-1.5 rounded-full bg-accent"
       />
 
@@ -283,6 +301,7 @@ function InteractiveCard({
 }: {
   technology: Technology;
 }) {
+  const shouldReduceMotion = useReducedMotion();
   const cardRef = useRef<HTMLDivElement>(null);
 
   const rotateX = useMotionValue(0);
@@ -316,7 +335,7 @@ function InteractiveCard({
   const handleMouseMove = (
     event: React.MouseEvent<HTMLDivElement>,
   ) => {
-    if (!cardRef.current) return;
+    if (shouldReduceMotion || !cardRef.current) return;
 
     const rect = cardRef.current.getBoundingClientRect();
 
@@ -349,19 +368,31 @@ function InteractiveCard({
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      style={{
-        rotateX: springRotateX,
-        rotateY: springRotateY,
-        transformPerspective: 900,
-      }}
-      whileHover={{
-        y: -3,
-        scale: 1.01,
-      }}
-      transition={{
-        duration: 0.35,
-        ease,
-      }}
+      style={
+        shouldReduceMotion
+          ? undefined
+          : {
+              rotateX: springRotateX,
+              rotateY: springRotateY,
+              transformPerspective: 900,
+            }
+      }
+      whileHover={
+        shouldReduceMotion
+          ? undefined
+          : {
+              y: -3,
+              scale: 1.01,
+            }
+      }
+      transition={
+        shouldReduceMotion
+          ? undefined
+          : {
+              duration: 0.35,
+              ease,
+            }
+      }
       className="group relative overflow-hidden rounded-xl border border-border bg-background/40 p-5"
     >
       <motion.div
@@ -375,50 +406,67 @@ function InteractiveCard({
         }}
       />
 
-      <motion.div
+      <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 rounded-xl border border-accent/0 transition-colors duration-500 group-hover:border-accent/20"
       />
 
       <motion.div
         aria-hidden="true"
-        className="absolute left-0 top-0 h-px w-full origin-left bg-accent"
         initial={{
           scaleX: 0,
         }}
-        whileHover={{
-          scaleX: 1,
-        }}
-        transition={{
-          duration: 0.45,
-          ease,
-        }}
+        whileHover={
+          shouldReduceMotion
+            ? undefined
+            : {
+                scaleX: 1,
+              }
+        }
+        transition={
+          shouldReduceMotion
+            ? undefined
+            : {
+                duration: 0.45,
+                ease,
+              }
+        }
+        className="absolute left-0 top-0 h-px w-full origin-left bg-accent"
       />
 
       <div className="relative z-10 flex items-start justify-between gap-4">
         <motion.div
-          whileHover={{
-            rotate: -4,
-            scale: 1.04,
-          }}
-          transition={{
-            type: "spring",
-            stiffness: 300,
-            damping: 18,
-          }}
+          whileHover={
+            shouldReduceMotion
+              ? undefined
+              : {
+                  rotate: -4,
+                  scale: 1.04,
+                }
+          }
+          transition={
+            shouldReduceMotion
+              ? undefined
+              : {
+                  type: "spring",
+                  stiffness: 300,
+                  damping: 18,
+                }
+          }
           className="flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-white/[0.025] font-mono text-[10px] font-medium text-text-secondary transition-colors duration-300 group-hover:border-accent/30 group-hover:text-accent"
         >
-  <svg
-    viewBox="0 0 24 24"
-    aria-hidden="true"
-    className="h-5 w-5 fill-current transition-transform duration-300 group-hover:scale-110"
-  >
-    <path d={technology.icon.path} />
-  </svg>
-</motion.div>
+          <svg
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+            className="h-5 w-5 fill-current transition-transform duration-300 group-hover:scale-110"
+          >
+            <path d={technology.icon.path} />
+          </svg>
+        </motion.div>
 
         <ArrowUpRight
           size={15}
+          aria-hidden="true"
           className="text-text-muted opacity-0 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent group-hover:opacity-100"
         />
       </div>
@@ -446,6 +494,8 @@ function InteractiveCard({
 }
 
 export function InteractiveStack() {
+  const shouldReduceMotion = useReducedMotion();
+
   const [activeCategory, setActiveCategory] =
     useState<Category>("Frontend");
 
@@ -467,31 +517,45 @@ export function InteractiveStack() {
   return (
     <section
       id="stack"
-        className="relative overflow-hidden px-5 py-20 sm:px-10 sm:py-24 lg:px-16 lg:py-32"
+      className="relative overflow-hidden px-5 py-20 sm:px-10 sm:py-24 lg:px-16 lg:py-32"
     >
+      {/* Ambient background */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute left-1/2 top-1/3 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-accent/[0.035] blur-[120px]"
       />
 
       <div className="relative mx-auto max-w-7xl">
+        {/* Section heading */}
         <motion.div
-          initial={{
-            opacity: 0,
-            y: 24,
-          }}
-          whileInView={{
-            opacity: 1,
-            y: 0,
-          }}
+          initial={
+            shouldReduceMotion
+              ? undefined
+              : {
+                  opacity: 0,
+                  y: 24,
+                }
+          }
+          whileInView={
+            shouldReduceMotion
+              ? undefined
+              : {
+                  opacity: 1,
+                  y: 0,
+                }
+          }
           viewport={{
             once: true,
             margin: "-100px",
           }}
-          transition={{
-            duration: 0.7,
-            ease,
-          }}
+          transition={
+            shouldReduceMotion
+              ? undefined
+              : {
+                  duration: 0.7,
+                  ease,
+                }
+          }
           className="mb-14 max-w-3xl sm:mb-16"
         >
           <p className="mb-4 font-mono text-xs uppercase tracking-[0.3em] text-accent">
@@ -507,33 +571,45 @@ export function InteractiveStack() {
           </h2>
 
           <p className="mt-6 max-w-2xl text-base leading-8 text-text-secondary sm:text-lg">
-            A growing collection of technologies I use
-            to design, build, animate, connect, and ship
-            digital experiences.
+            A growing collection of technologies I use to design,
+            build, animate, connect, and ship digital experiences.
           </p>
         </motion.div>
 
         <div className="rounded-2xl border border-border bg-surface/50 p-2.5 backdrop-blur-sm lg:sticky lg:top-28">
+          {/* Category navigation */}
           <motion.div
-            initial={{
-              opacity: 0,
-              x: -20,
-            }}
-            whileInView={{
-              opacity: 1,
-              x: 0,
-            }}
+            initial={
+              shouldReduceMotion
+                ? undefined
+                : {
+                    opacity: 0,
+                    x: -20,
+                  }
+            }
+            whileInView={
+              shouldReduceMotion
+                ? undefined
+                : {
+                    opacity: 1,
+                    x: 0,
+                  }
+            }
             viewport={{
               once: true,
               margin: "-80px",
             }}
-            transition={{
-              duration: 0.7,
-              ease,
-            }}
+            transition={
+              shouldReduceMotion
+                ? undefined
+                : {
+                    duration: 0.7,
+                    ease,
+                  }
+            }
             className="relative"
           >
-            <div className="lg:sticky top-28 rounded-2xl border border-border bg-surface/50 p-3 backdrop-blur-sm">
+            <div className="rounded-2xl border border-border bg-surface/50 p-3 backdrop-blur-sm lg:sticky lg:top-28">
               {categories.map((category, index) => {
                 const Icon = category.icon;
                 const isActive =
@@ -576,24 +652,37 @@ export function InteractiveStack() {
             </div>
           </motion.div>
 
+          {/* Technology cards */}
           <motion.div
-            initial={{
-              opacity: 0,
-              x: 20,
-            }}
-            whileInView={{
-              opacity: 1,
-              x: 0,
-            }}
+            initial={
+              shouldReduceMotion
+                ? undefined
+                : {
+                    opacity: 0,
+                    x: 20,
+                  }
+            }
+            whileInView={
+              shouldReduceMotion
+                ? undefined
+                : {
+                    opacity: 1,
+                    x: 0,
+                  }
+            }
             viewport={{
               once: true,
               margin: "-80px",
             }}
-            transition={{
-              duration: 0.7,
-              delay: 0.1,
-              ease,
-            }}
+            transition={
+              shouldReduceMotion
+                ? undefined
+                : {
+                    duration: 0.7,
+                    delay: 0.1,
+                    ease,
+                  }
+            }
             className="min-h-[520px] rounded-2xl border border-border bg-surface/30 p-5 sm:p-7"
           >
             <div className="mb-8 flex items-center justify-between border-b border-border pb-5">
@@ -625,48 +714,76 @@ export function InteractiveStack() {
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeCategory}
-                initial={{
-                  opacity: 0,
-                  y: 8,
-                  filter: "blur(3px)",
-                }}
-                animate={{
-                  opacity: 1,
-                  y: 0,
-                  filter: "blur(0px)",
-                }}
-                exit={{
-                  opacity: 0,
-                  y: -8,
-                  filter: "blur(4px)",
-                }}
-                transition={{
-                  duration: 0.35,
-                  ease,
-                }}
+                initial={
+                  shouldReduceMotion
+                    ? undefined
+                    : {
+                        opacity: 0,
+                        y: 8,
+                        filter: "blur(3px)",
+                      }
+                }
+                animate={
+                  shouldReduceMotion
+                    ? undefined
+                    : {
+                        opacity: 1,
+                        y: 0,
+                        filter: "blur(0px)",
+                      }
+                }
+                exit={
+                  shouldReduceMotion
+                    ? undefined
+                    : {
+                        opacity: 0,
+                        y: -8,
+                        filter: "blur(4px)",
+                      }
+                }
+                transition={
+                  shouldReduceMotion
+                    ? undefined
+                    : {
+                        duration: 0.35,
+                        ease,
+                      }
+                }
                 className="grid gap-3 sm:grid-cols-2"
               >
                 {filteredTechnologies.map(
                   (technology, index) => (
                     <motion.div
                       key={technology.name}
-                      initial={{
-                        opacity: 0,
-                        y: 14,
-                        scale: 0.985,
-                        filter: "blur(3px)",
-                      }}
-                      animate={{
-                        opacity: 1,
-                        y: 0,
-                        scale: 1,
-                        filter: "blur(0px)",
-                      }}
-                      transition={{
-                        duration: 0.45,
-                        delay: index * 0.055,
-                        ease,
-                      }}
+                      initial={
+                        shouldReduceMotion
+                          ? undefined
+                          : {
+                              opacity: 0,
+                              y: 14,
+                              scale: 0.985,
+                              filter: "blur(3px)",
+                            }
+                      }
+                      animate={
+                        shouldReduceMotion
+                          ? undefined
+                          : {
+                              opacity: 1,
+                              y: 0,
+                              scale: 1,
+                              filter: "blur(0px)",
+                            }
+                      }
+                      transition={
+                        shouldReduceMotion
+                          ? undefined
+                          : {
+                              duration: 0.45,
+                              delay: index * 0.055,
+                              ease,
+                            }
+                      }
                     >
                       <InteractiveCard
                         technology={technology}
@@ -679,22 +796,35 @@ export function InteractiveStack() {
           </motion.div>
         </div>
 
+        {/* Footer statement */}
         <motion.div
-          initial={{
-            opacity: 0,
-            y: 18,
-          }}
-          whileInView={{
-            opacity: 1,
-            y: 0,
-          }}
+          initial={
+            shouldReduceMotion
+              ? undefined
+              : {
+                  opacity: 0,
+                  y: 18,
+                }
+          }
+          whileInView={
+            shouldReduceMotion
+              ? undefined
+              : {
+                  opacity: 1,
+                  y: 0,
+                }
+          }
           viewport={{
             once: true,
           }}
-          transition={{
-            delay: 0.2,
-            duration: 0.6,
-          }}
+          transition={
+            shouldReduceMotion
+              ? undefined
+              : {
+                  delay: 0.2,
+                  duration: 0.6,
+                }
+          }
           className="mt-10 flex items-center gap-4"
         >
           <span className="h-px flex-1 bg-border" />
