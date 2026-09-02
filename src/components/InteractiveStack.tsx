@@ -249,8 +249,7 @@ function MagneticButton({
       whileTap={{
         scale: 0.985,
       }}
-      className="group relative flex w-full items-center gap-4 rounded-xl px-4 py-4 text-left"
-    >
+        className="group relative flex min-h-11 w-full items-center gap-4 rounded-xl px-4 py-3.5 text-left sm:py-4">
       {active && (
         <motion.div
           layoutId="active-stack-category"
@@ -468,7 +467,7 @@ export function InteractiveStack() {
   return (
     <section
       id="stack"
-      className="relative overflow-hidden px-6 py-32 sm:px-10 lg:px-16"
+        className="relative overflow-hidden px-5 py-20 sm:px-10 sm:py-24 lg:px-16 lg:py-32"
     >
       <div
         aria-hidden="true"
@@ -493,7 +492,7 @@ export function InteractiveStack() {
             duration: 0.7,
             ease,
           }}
-          className="mb-16 max-w-3xl"
+          className="mb-14 max-w-3xl sm:mb-16"
         >
           <p className="mb-4 font-mono text-xs uppercase tracking-[0.3em] text-accent">
             Technical Arsenal
@@ -514,7 +513,7 @@ export function InteractiveStack() {
           </p>
         </motion.div>
 
-        <div className="grid gap-6 lg:grid-cols-[0.7fr_1.3fr]">
+        <div className="rounded-2xl border border-border bg-surface/50 p-2.5 backdrop-blur-sm lg:sticky lg:top-28">
           <motion.div
             initial={{
               opacity: 0,
@@ -534,7 +533,7 @@ export function InteractiveStack() {
             }}
             className="relative"
           >
-            <div className="sticky top-28 rounded-2xl border border-border bg-surface/50 p-3 backdrop-blur-sm">
+            <div className="lg:sticky top-28 rounded-2xl border border-border bg-surface/50 p-3 backdrop-blur-sm">
               {categories.map((category, index) => {
                 const Icon = category.icon;
                 const isActive =

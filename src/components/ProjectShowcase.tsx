@@ -139,7 +139,7 @@ export function ProjectShowcase() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.7 }}
-          className="mb-20 flex flex-col justify-between gap-6 md:flex-row md:items-end"
+          className="mb-14 sm:mb-20 flex flex-col justify-between gap-6 md:flex-row md:items-end"
         >
           <div>
             <p className="mb-4 font-mono text-xs uppercase tracking-[0.3em] text-accent">

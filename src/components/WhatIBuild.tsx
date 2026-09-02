@@ -47,8 +47,7 @@ export function WhatIBuild() {
   return (
     <section
       id="services"
-      className="px-6 py-24 sm:px-10 lg:px-16 lg:py-28"
-    >
+        className="px-5 py-20 sm:px-10 sm:py-24 lg:px-16 lg:py-28">
       <div className="mx-auto max-w-7xl">
 
         {/* Header */}
