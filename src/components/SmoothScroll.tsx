@@ -9,7 +9,11 @@ export function SmoothScroll() {
       history.scrollRestoration = "manual";
     }
 
-    window.scrollTo(0, 0);
+    const hasHash = window.location.hash.length > 0;
+
+    if (!hasHash) {
+      window.scrollTo(0, 0);
+    }
 
     const lenis = new Lenis({
       duration: 1.2,

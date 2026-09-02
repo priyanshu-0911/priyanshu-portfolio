@@ -115,7 +115,7 @@ export function CursorGlow() {
         scale,
         opacity,
       }}
-      className="pointer-events-none fixed left-0 top-0 z-0 h-[300px] w-[300px] rounded-full bg-accent blur-[80px]"
+      className="pointer-events-none fixed left-0 top-0 z-0 hidden h-[300px] w-[300px] rounded-full bg-accent blur-[80px] md:block"
     />
   );
 }
